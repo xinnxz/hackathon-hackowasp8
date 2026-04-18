@@ -67,34 +67,17 @@ export async function loadConfig(targetPath: string): Promise<GuardrailConfig> {
   const configPath = path.join(targetPath, ".guardrailrc.json");
   try {
     const raw = await fs.readFile(configPath, "utf8");
-    const parsed = JSON.parse(raw) as Partial<GuardrailConfig>;
-    const merged = deepMerge(defaultConfig, parsed);
+    const partial = JSON.parse(raw) as Partial<GuardrailConfig>;
+    const merged: GuardrailConfig = {
+      policy: { ...defaultConfig.policy, ...partial.policy },
+      rules: { ...defaultConfig.rules, ...partial.rules },
+      ignore: { ...defaultConfig.ignore, ...partial.ignore },
+      ai: { ...defaultConfig.ai, ...partial.ai },
+      report: { ...defaultConfig.report, ...partial.report },
+    };
     console.log(`\x1b[36m[Config] Loaded .guardrailrc.json from ${configPath}\x1b[0m`);
     return merged;
   } catch {
-    // No config file found — use defaults silently
     return { ...defaultConfig };
   }
-}
-
-function deepMerge<T extends Record<string, unknown>>(base: T, override: Partial<T>): T {
-  const result = { ...base };
-  for (const key of Object.keys(override) as Array<keyof T>) {
-    const baseVal = base[key];
-    const overVal = override[key];
-    if (
-      overVal !== undefined &&
-      typeof baseVal === "object" &&
-      baseVal !== null &&
-      !Array.isArray(baseVal) &&
-      typeof overVal === "object" &&
-      overVal !== null &&
-      !Array.isArray(overVal)
-    ) {
-      result[key] = deepMerge(baseVal as Record<string, unknown>, overVal as Record<string, unknown>) as T[keyof T];
-    } else if (overVal !== undefined) {
-      result[key] = overVal as T[keyof T];
-    }
-  }
-  return result;
 }

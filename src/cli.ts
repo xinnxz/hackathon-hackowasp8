@@ -15,7 +15,7 @@ async function main(): Promise<void> {
   const [, , command = "scan", scanTarget = ".", ...rest] = process.argv;
 
   if (command === "dashboard") {
-    const { startDashboard } = await import("./dashboard/server");
+    const { startDashboard } = await import("./dashboard/server.js");
     await startDashboard();
     return;
   }
