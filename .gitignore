@@ -1,0 +1,6 @@
+node_modules/
+dist/
+report/*.json
+report/*.html
+demo/vulnerable-app/node_modules/
+demo/vulnerable-app/package-lock.json

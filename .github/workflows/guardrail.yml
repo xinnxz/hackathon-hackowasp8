@@ -1,0 +1,40 @@
+name: OWASP Guardrail
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guardrail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install demo dependencies
+        run: npm install
+        working-directory: demo/vulnerable-app
+
+      - name: Run Guardrail scan
+        run: npm run guardrail -- scan demo/vulnerable-app --fail-on=high,critical
+
+      - name: Upload SARIF report
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: report/guardrail-report.sarif
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: owasp-guardrail-report
+          path: report/guardrail-report.html

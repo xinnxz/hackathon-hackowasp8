@@ -1,0 +1,12 @@
+{
+  "name": "guardrail-demo-fixed-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Safer app for OWASP Guardrail pass demo",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "4.22.1"
+  }
+}
