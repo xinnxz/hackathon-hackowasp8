@@ -196,6 +196,29 @@ function normalizeReferences(value: unknown, finding: Finding): string[] {
   return [finding.owaspCategory?.link ?? "https://cheatsheetseries.owasp.org/"];
 }
 
+/**
+ * Returns one representative finding per unique type:title combo.
+ * Dependency findings of the same type are collapsed to avoid wasting quota.
+ */
+function deduplicateForAi(findings: Finding[]): Finding[] {
+  const seen = new Set<string>();
+  const result: Finding[] = [];
+  // Prioritize non-dependency findings first
+  const sorted = [...findings].sort((a, b) => {
+    if (a.type === "dependency" && b.type !== "dependency") return 1;
+    if (a.type !== "dependency" && b.type === "dependency") return -1;
+    return 0;
+  });
+  for (const f of sorted) {
+    const key = f.type === "dependency" ? "dependency:generic" : `${f.type}:${f.title}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      result.push(f);
+    }
+  }
+  return result;
+}
+
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
