@@ -25,6 +25,6 @@
   },
   "report": {
     "formats": ["json", "html", "sarif", "markdown"],
-    "outputDir": "../../report"
+    "outputDir": "./report"
   }
 }

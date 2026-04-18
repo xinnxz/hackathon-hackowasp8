@@ -2,9 +2,10 @@ import type { AiSuggestion, Finding } from "../types";
 
 const GEMINI_MODEL = "gemini-2.0-flash";
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
-const BATCH_SIZE = 5;
 const MAX_RETRIES = 2;
 const REQUEST_TIMEOUT_MS = 15_000;
+const REQUEST_DELAY_MS = 1200; // stay under free-tier RPM limit
+const MAX_AI_FINDINGS = 8;    // cap to avoid exhausting quota on large scans
 
 export async function generateFixSuggestions(
   findings: Finding[],
@@ -16,26 +17,32 @@ export async function generateFixSuggestions(
     return findings.map((f) => ({ ...f, aiSuggestion: buildFallbackSuggestion(f) }));
   }
 
-  console.log(`\x1b[35m[AI] Sending ${findings.length} findings to Gemini...\x1b[0m`);
+  // Deduplicate by finding type to save quota (dependency findings all have same fix pattern)
+  const toProcess = deduplicateForAi(findings).slice(0, MAX_AI_FINDINGS);
+  console.log(`\x1b[35m[AI] Requesting Gemini fixes for ${toProcess.length} unique findings (sequential)...\x1b[0m`);
 
-  const results: Finding[] = [];
-  for (let i = 0; i < findings.length; i += BATCH_SIZE) {
-    const batch = findings.slice(i, i + BATCH_SIZE);
-    const settled = await Promise.allSettled(
-      batch.map((f) => requestWithRetry(f, key)),
-    );
-    for (let j = 0; j < batch.length; j++) {
-      const finding = batch[j]!;
-      const result = settled[j]!;
-      if (result.status === "fulfilled") {
-        results.push({ ...finding, aiSuggestion: result.value });
-      } else {
-        console.error(`\x1b[31m[AI] Failed for "${finding.title}": ${String(result.reason)}\x1b[0m`);
-        results.push({ ...finding, aiSuggestion: buildFallbackSuggestion(finding) });
-      }
+  const fixMap = new Map<string, AiSuggestion>();
+  for (let i = 0; i < toProcess.length; i++) {
+    const f = toProcess[i]!;
+    const key2 = `${f.type}:${f.title}`;
+    if (fixMap.has(key2)) continue;
+    try {
+      const suggestion = await requestWithRetry(f, key);
+      fixMap.set(key2, suggestion);
+      console.log(`\x1b[32m[AI] ✔ ${f.title}\x1b[0m`);
+    } catch (err) {
+      console.error(`\x1b[31m[AI] ✖ ${f.title}: ${String(err).slice(0, 80)}\x1b[0m`);
+      fixMap.set(key2, buildFallbackSuggestion(f));
     }
+    if (i < toProcess.length - 1) await sleep(REQUEST_DELAY_MS);
   }
-  return results;
+
+  // Apply suggestions back to all findings (including duplicates)
+  return findings.map((f) => {
+    const k = `${f.type}:${f.title}`;
+    const suggestion = fixMap.get(k) ?? buildFallbackSuggestion(f);
+    return { ...f, aiSuggestion: suggestion };
+  });
 }
 
 async function requestWithRetry(finding: Finding, apiKey: string): Promise<AiSuggestion> {
