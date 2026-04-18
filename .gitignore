@@ -2,5 +2,10 @@ node_modules/
 dist/
 report/*.json
 report/*.html
+.env
+.env.local
+.env.*.local
 demo/vulnerable-app/node_modules/
 demo/vulnerable-app/package-lock.json
+demo/fixed-app/node_modules/
+demo/fixed-app/package-lock.json

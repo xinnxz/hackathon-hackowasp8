@@ -49,6 +49,15 @@ export type Finding = {
   aiSuggestion?: AiSuggestion;
 };
 
+export type SecurityScore = {
+  score: number;
+  grade: string;
+  label: string;
+  color: string;
+  bg: string;
+  breakdown: Record<Severity, number>;
+};
+
 export type GuardrailReport = {
   scannedPath: string;
   generatedAt: string;
@@ -57,6 +66,7 @@ export type GuardrailReport = {
   };
   findings: Finding[];
   summary: Record<Severity, number>;
+  securityScore: SecurityScore;
   passed: boolean;
 };
 

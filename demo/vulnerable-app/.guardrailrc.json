@@ -1,0 +1,30 @@
+{
+  "policy": {
+    "failOn": ["high", "critical"],
+    "scoreThreshold": 50
+  },
+  "rules": {
+    "secrets": true,
+    "injection": true,
+    "xss": true,
+    "cors": true,
+    "eval": true,
+    "ssrf": true,
+    "weakCrypto": true,
+    "pathTraversal": true,
+    "insecureHttp": true,
+    "authMiddleware": true
+  },
+  "ignore": {
+    "paths": [],
+    "findings": []
+  },
+  "ai": {
+    "enabled": true,
+    "model": "gemini-2.0-flash"
+  },
+  "report": {
+    "formats": ["json", "html", "sarif", "markdown"],
+    "outputDir": "../../report"
+  }
+}
