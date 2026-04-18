@@ -1,7 +1,7 @@
 {
   "name": "hackowasp8",
-  "version": "1.0.0",
-  "description": "OWASP Guardrail hackathon MVP",
+  "version": "2.0.0",
+  "description": "OWASP Guardrail — Enterprise DevSecOps Scanner with AI",
   "main": "dist/cli.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -9,6 +9,8 @@
     "scan:demo": "tsx src/cli.ts scan demo/vulnerable-app",
     "scan:fixed": "tsx src/cli.ts scan demo/fixed-app",
     "scan:demo:ai": "tsx src/cli.ts scan demo/vulnerable-app --with-ai",
+    "scan:fixed:ai": "tsx src/cli.ts scan demo/fixed-app --with-ai",
+    "dashboard": "tsx src/cli.ts dashboard",
     "test": "tsx --test tests/**/*.test.ts"
   },
   "keywords": [],
