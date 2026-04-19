@@ -55,7 +55,7 @@ export const defaultConfig: GuardrailConfig = {
   },
   ai: {
     enabled: true,
-    model: "gemini-2.0-flash",
+    model: "llama-3.3-70b-versatile (Groq)",
   },
   report: {
     formats: ["json", "html", "sarif", "markdown"],

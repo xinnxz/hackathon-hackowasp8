@@ -2,7 +2,7 @@
   <h1>⛨ OWASP Guardrail V2 Enterprise</h1>
   <p><strong>Next-Gen DevSecOps Scanner with AI Remediation & Interactive Dashboard</strong></p>
 
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+  [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
   [![Security Score](https://img.shields.io/badge/Security_Score-A%2B-4ade80.svg)](#)
   [![HackOWASP 8.0](https://img.shields.io/badge/HackOWASP-8.0-ff4d6d.svg)](#)
   [![AI Powered](https://img.shields.io/badge/AI-Groq%20LLaMA_3.3-a78bfa.svg)](#)

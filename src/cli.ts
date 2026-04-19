@@ -40,7 +40,7 @@ async function main(): Promise<void> {
   let findings = await scanProject(absoluteTarget);
 
   if (withAi) {
-    logStep(3, 5, "Generating AI fix suggestions (Gemini)");
+    logStep(3, 5, "Generating AI fix suggestions (Groq / LLaMA 3.3)");
     findings = await generateFixSuggestions(findings, apiKey);
   }
 
