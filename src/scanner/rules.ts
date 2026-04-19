@@ -1,10 +1,14 @@
 import path from "node:path";
+import type { GuardrailConfig } from "../config";
 import type { Finding } from "../types";
 
-export function scanRuleLine(file: string, line: number, content: string): Finding[] {
-  const findings: Finding[] = [];
+type RuleFlags = GuardrailConfig["rules"];
 
-  if (/cors\s*\(\s*\{\s*origin\s*:\s*["']\*["']/.test(content) || /Access-Control-Allow-Origin["']?\s*[:=]\s*["']\*["']/.test(content)) {
+export function scanRuleLine(file: string, line: number, content: string, rules?: RuleFlags): Finding[] {
+  const findings: Finding[] = [];
+  const on = (flag?: boolean) => flag !== false;
+
+  if (on(rules?.cors) && (/cors\s*\(\s*\{\s*origin\s*:\s*["']\*["']/.test(content) || /Access-Control-Allow-Origin["']?\s*[:=]\s*["']\*["']/.test(content))) {
     findings.push({
       type: "misconfiguration",
       title: "Wildcard CORS policy detected",
@@ -16,7 +20,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/SELECT .*[$`"']\s*\+\s*[A-Za-z0-9_.]+/i.test(content) || /query\s*\(\s*["'`].*SELECT .*['"`]\s*\+\s*/i.test(content)) {
+  if (on(rules?.injection) && (/SELECT .*[$`"']\s*\+\s*[A-Za-z0-9_.]+/i.test(content) || /query\s*\(\s*["'`].*SELECT .*['"`]\s*\+\s*/i.test(content))) {
     findings.push({
       type: "injection",
       title: "String-concatenated SQL query detected",
@@ -28,7 +32,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/app\.(get|post|put|delete)\([^,]+,\s*(async\s*)?\(req,\s*res\)/.test(content) && file.includes(path.join("src", ""))) {
+  if (on(rules?.authMiddleware) && /app\.(get|post|put|delete)\([^,]+,\s*(async\s*)?\(req,\s*res\)/.test(content) && file.includes(path.join("src", ""))) {
     findings.push({
       type: "access-control",
       title: "Route handler without obvious authorization middleware",
@@ -40,7 +44,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/dangerouslySetInnerHTML|innerHTML\s*=|document\.write\(/.test(content)) {
+  if (on(rules?.xss) && /dangerouslySetInnerHTML|innerHTML\s*=|document\.write\(/.test(content)) {
     findings.push({
       type: "xss",
       title: "Potential XSS sink detected",
@@ -52,7 +56,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/\beval\s*\(|\bFunction\s*\(|child_process\.(exec|execSync)\s*\(/.test(content)) {
+  if (on(rules?.eval) && /\beval\s*\(|\bFunction\s*\(|child_process\.(exec|execSync)\s*\(/.test(content)) {
     findings.push({
       type: "injection",
       title: "Dynamic code execution pattern detected",
@@ -64,7 +68,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/fetch\s*\(\s*req\.(query|body)|axios\.(get|post)\s*\(\s*req\.(query|body)/.test(content)) {
+  if (on(rules?.ssrf) && /fetch\s*\(\s*req\.(query|body)|axios\.(get|post)\s*\(\s*req\.(query|body)/.test(content)) {
     findings.push({
       type: "ssrf",
       title: "Potential SSRF flow detected",
@@ -76,7 +80,7 @@ export function scanRuleLine(file: string, line: number, content: string): Findi
     });
   }
 
-  if (/["'`]http:\/\//i.test(content)) {
+  if (on(rules?.insecureHttp) && /["'`]http:\/\//i.test(content)) {
     findings.push({
       type: "misconfiguration",
       title: "Insecure HTTP endpoint hardcoded",
