@@ -1,9 +1,11 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { listConfigDirectories } from "./discovery";
 import { mergeGuardrailConfig, type GuardrailConfig } from "./merge";
 
 export type { GuardrailConfig };
 export { mergeGuardrailConfig };
+export { findGitRoot, listConfigDirectories } from "./discovery";
 
 export const defaultConfig: GuardrailConfig = {
   policy: {
@@ -38,24 +40,12 @@ export const defaultConfig: GuardrailConfig = {
 };
 
 /**
- * Walks from filesystem root down to `targetPath` and merges every `.guardrailrc.json`
- * found along the way. Deeper directories override scalars; `ignore.paths` / `ignore.findings`
- * are unioned (deduped) across levels.
+ * Merges `.guardrailrc.json` from the Git repo root down to `targetPath` (stops at `.git`).
+ * If no Git root exists, only `targetPath` is used for config lookup.
+ * Deeper directories override scalars; `ignore.paths` / `ignore.findings` are unioned (deduped).
  */
 export async function loadConfig(targetPath: string): Promise<GuardrailConfig> {
-  const absolute = path.resolve(targetPath);
-  const chain: string[] = [];
-  let cur = absolute;
-  for (let i = 0; i < 40; i++) {
-    chain.push(cur);
-    const parent = path.dirname(cur);
-    if (parent === cur) {
-      break;
-    }
-    cur = parent;
-  }
-
-  const broadToNarrow = chain.slice().reverse();
+  const broadToNarrow = await listConfigDirectories(targetPath);
   let merged: GuardrailConfig = { ...defaultConfig };
   const loadedPaths: string[] = [];
 
