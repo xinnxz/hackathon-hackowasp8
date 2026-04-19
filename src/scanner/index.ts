@@ -1,6 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import type { GuardrailConfig } from "../config";
 import { mapFindingToOwasp } from "../owasp/mapping";
+import { normalizeScanPath, pathMatchesIgnore } from "../util/pathMatch";
 import { scanDependencies } from "./deps";
 import { scanRuleLine } from "./rules";
 import { scanSecretLine } from "./secrets";
@@ -8,19 +10,19 @@ import type { Finding } from "../types";
 import { severityRank } from "../types";
 
 const supportedExtensions = new Set([".js", ".ts", ".tsx", ".jsx", ".json", ".env", ".yml", ".yaml"]);
-const skipDirectories = new Set(["node_modules", ".git", "dist", "coverage", "report"]);
+const skipDirectories = new Set(["node_modules", ".git", "dist", "coverage"]);
 
-export async function scanProject(targetPath: string): Promise<Finding[]> {
-  const fileFindings = await scanFiles(targetPath);
-  const dependencyFindings = await scanDependencies(targetPath);
+export async function scanProject(targetPath: string, config: GuardrailConfig): Promise<Finding[]> {
+  const fileFindings = await scanFiles(targetPath, config);
+  const dependencyFindings = await scanDependencies(targetPath, config.rules.dependencies);
 
   return [...fileFindings, ...dependencyFindings]
     .map((finding) => ({ ...finding, owaspCategory: mapFindingToOwasp(finding) }))
     .sort((left, right) => severityRank[right.severity] - severityRank[left.severity]);
 }
 
-async function scanFiles(targetPath: string): Promise<Finding[]> {
-  const filePaths = await listFiles(targetPath);
+async function scanFiles(targetPath: string, config: GuardrailConfig): Promise<Finding[]> {
+  const filePaths = await listFiles(targetPath, targetPath, config);
   const findings: Finding[] = [];
 
   for (const filePath of filePaths) {
@@ -29,16 +31,17 @@ async function scanFiles(targetPath: string): Promise<Finding[]> {
     const lines = content.split(/\r?\n/);
 
     lines.forEach((line, index) => {
-      findings.push(...scanSecretLine(relativePath, index + 1, line));
-      findings.push(...scanRuleLine(relativePath, index + 1, line));
+      findings.push(...scanSecretLine(relativePath, index + 1, line, config.rules));
+      findings.push(...scanRuleLine(relativePath, index + 1, line, config.rules));
     });
   }
 
   return findings;
 }
 
-async function listFiles(targetPath: string): Promise<string[]> {
-  const entries = await fs.readdir(targetPath, { withFileTypes: true });
+async function listFiles(currentDir: string, scanRoot: string, config: GuardrailConfig): Promise<string[]> {
+  const ignorePatterns = config.ignore?.paths ?? [];
+  const entries = await fs.readdir(currentDir, { withFileTypes: true });
   const files: string[] = [];
 
   for (const entry of entries) {
@@ -46,9 +49,15 @@ async function listFiles(targetPath: string): Promise<string[]> {
       continue;
     }
 
-    const entryPath = path.join(targetPath, entry.name);
+    const entryPath = path.join(currentDir, entry.name);
+    const relativePath = normalizeScanPath(path.relative(scanRoot, entryPath));
+
+    if (ignorePatterns.some((p) => pathMatchesIgnore(relativePath, p))) {
+      continue;
+    }
+
     if (entry.isDirectory()) {
-      files.push(...await listFiles(entryPath));
+      files.push(...await listFiles(entryPath, scanRoot, config));
       continue;
     }
 
