@@ -1,5 +1,33 @@
+import { readFileSync } from "node:fs";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+
+// ── Built-in .env loader (zero-dependency, replaces dotenv) ──────────
+(function loadDotEnv() {
+  const envPaths = [
+    path.resolve(".env"),
+    path.resolve(".env.local"),
+  ];
+  for (const envPath of envPaths) {
+    try {
+      const content = readFileSync(envPath, "utf8");
+      for (const line of content.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith("#")) continue;
+        const eqIndex = trimmed.indexOf("=");
+        if (eqIndex === -1) continue;
+        const key = trimmed.slice(0, eqIndex).trim();
+        const value = trimmed.slice(eqIndex + 1).trim().replace(/^["']|["']$/g, "");
+        if (key && !process.env[key]) {
+          process.env[key] = value;
+        }
+      }
+    } catch {
+      // File doesn't exist — that's fine, .env is optional
+    }
+  }
+})();
+
 import { generateFixSuggestions } from "./ai/suggestions";
 import { loadConfig } from "./config";
 import { applyFindingIgnores, evaluatePass, mergeFailOn } from "./policy";
