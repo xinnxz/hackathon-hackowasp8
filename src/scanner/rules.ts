@@ -92,7 +92,7 @@ export function scanRuleLine(file: string, line: number, content: string, rules?
     });
   }
 
-  if (/md5|sha1/i.test(content) && /password|hash|crypto/i.test(content)) {
+  if (on(rules?.weakCrypto) && /md5|sha1/i.test(content) && /password|hash|crypto/i.test(content)) {
     findings.push({
       type: "crypto",
       title: "Weak cryptographic primitive usage",
@@ -104,7 +104,7 @@ export function scanRuleLine(file: string, line: number, content: string, rules?
     });
   }
 
-  if (/(\.\.\/|\.\.\\)/.test(content) && /(readFile|writeFile|open|sendFile|path\.join)/.test(content)) {
+  if (on(rules?.pathTraversal) && /(\.\.\/|\.\.\\)/.test(content) && /(readFile|writeFile|open|sendFile|path\.join)/.test(content)) {
     findings.push({
       type: "path-traversal",
       title: "Potential path traversal pattern",

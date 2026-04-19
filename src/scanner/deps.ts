@@ -9,7 +9,11 @@ const auditCommand = process.platform === "win32"
   ? { file: "cmd", args: ["/c", "npm", "audit", "--json"] }
   : { file: "npm", args: ["audit", "--json"] };
 
-export async function scanDependencies(targetPath: string): Promise<Finding[]> {
+export async function scanDependencies(targetPath: string, runAudit = true): Promise<Finding[]> {
+  if (!runAudit) {
+    return [];
+  }
+
   const packageJsonPath = path.join(targetPath, "package.json");
   try {
     await fs.access(packageJsonPath);
