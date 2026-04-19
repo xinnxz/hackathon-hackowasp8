@@ -1,4 +1,7 @@
+import type { GuardrailConfig } from "../config";
 import type { Finding, Severity } from "../types";
+
+type RuleFlags = GuardrailConfig["rules"];
 
 type SecretPattern = {
   title: string;
@@ -52,8 +55,11 @@ const secretPatterns: SecretPattern[] = [
   },
 ];
 
-export function scanSecretLine(file: string, line: number, content: string): Finding[] {
+export function scanSecretLine(file: string, line: number, content: string, rules?: RuleFlags): Finding[] {
   const findings: Finding[] = [];
+  if (rules && !rules.secrets) {
+    return findings;
+  }
 
   for (const pattern of secretPatterns) {
     if (pattern.regex.test(content)) {

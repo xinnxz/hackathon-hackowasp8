@@ -17,6 +17,7 @@ export interface GuardrailConfig {
     pathTraversal: boolean;
     insecureHttp: boolean;
     authMiddleware: boolean;
+    dependencies: boolean;
   };
   ignore: {
     paths: string[];
@@ -48,6 +49,7 @@ export const defaultConfig: GuardrailConfig = {
     pathTraversal: true,
     insecureHttp: true,
     authMiddleware: true,
+    dependencies: true,
   },
   ignore: {
     paths: [],
