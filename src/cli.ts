@@ -32,10 +32,14 @@ async function main(): Promise<void> {
   const { explicit: failOnExplicit, values: cliFailOn } = parseFailOnFromArgs(rest);
   const withAi = rest.includes("--with-ai");
   const apiKey = parseApiKey(rest);
+  const outputDirOverride = parseOutputDirFromArgs(rest);
   const absoluteTarget = path.resolve(scanTarget);
 
   logStep(1, withAi ? 5 : 4, "Loading config");
   const config = await loadConfig(absoluteTarget);
+  if (outputDirOverride) {
+    config.report.outputDir = outputDirOverride;
+  }
   const mergedFailOn = mergeFailOn(failOnExplicit, cliFailOn, config.policy.failOn);
 
   logStep(2, withAi ? 5 : 4, "Scanning files and dependencies");
@@ -68,6 +72,7 @@ async function main(): Promise<void> {
   };
 
   const outputDir = path.resolve(config.report.outputDir);
+  config.report.outputDir = outputDir;
   await fs.mkdir(outputDir, { recursive: true });
 
   const jsonPath = path.join(outputDir, "guardrail-report.json");
@@ -91,8 +96,9 @@ async function main(): Promise<void> {
 
 function printUsage(): void {
   console.log("Usage:");
-  console.log("  npm run guardrail -- scan <path> [--fail-on=medium,high,critical] [--with-ai] [--api-key=<key>]");
+  console.log("  npm run guardrail -- scan <path> [--fail-on=medium,high,critical] [--with-ai] [--api-key=<key>] [--output-dir=<dir>]");
   console.log("  (fail-on: CLI overrides .guardrailrc.json when --fail-on= is present)");
+  console.log("  (output-dir: CLI overrides report.outputDir for this run; path is resolved from cwd)");
   console.log("  npm run guardrail -- dashboard");
 }
 
