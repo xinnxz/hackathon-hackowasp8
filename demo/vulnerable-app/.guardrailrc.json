@@ -1,7 +1,7 @@
 {
   "policy": {
     "failOn": ["high", "critical"],
-    "scoreThreshold": 50
+    "scoreThreshold": 0
   },
   "rules": {
     "secrets": true,
@@ -13,7 +13,8 @@
     "weakCrypto": true,
     "pathTraversal": true,
     "insecureHttp": true,
-    "authMiddleware": true
+    "authMiddleware": true,
+    "dependencies": true
   },
   "ignore": {
     "paths": [],
@@ -21,7 +22,7 @@
   },
   "ai": {
     "enabled": true,
-    "model": "gemini-2.0-flash"
+    "model": "llama-3.3-70b-versatile (Groq)"
   },
   "report": {
     "formats": ["json", "html", "sarif", "markdown"],

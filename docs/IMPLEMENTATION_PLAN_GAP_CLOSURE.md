@@ -217,3 +217,16 @@ Rencana ini mengutamakan **integritas perilaku (behavioral integrity)** di atas 
 ## 9. Catatan etika kompetisi
 
 Semua perubahan harus merupakan **karya tim sendiri** dan mematuhi aturan HackOWASP / DoraHacks. Dokumen ini hanya panduan engineering; tidak menggantikan rubrik resmi penyelenggara.
+
+---
+
+## 10. Status implementasi (baseline gap closure)
+
+Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke codebase:
+
+- `scanProject(targetPath, config)` memakai `GuardrailConfig` untuk rule toggles dan audit dependency opsional.
+- `ignore.paths` (glob sederhana `*` / `**`) dan `ignore.findings` diterapkan.
+- `mergeFailOn` + `evaluatePass` (severity + `scoreThreshold`) mengatur `report.passed` dan `policy.notes`.
+- Contoh repo root: `.guardrailrc.json` untuk CI `scan .` yang mengabaikan `demo/`, `docs/`, `tests/`, dll.
+
+Item lanjutan opsional: SARIF rule id stabil, parent-directory config discovery, dan perluasan glob ignore.

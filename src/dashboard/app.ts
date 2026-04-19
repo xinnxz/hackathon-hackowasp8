@@ -242,7 +242,7 @@ function render() {
     '<b>Target:</b> ' + r.scannedPath,
     '<b>Generated:</b> ' + new Date(r.generatedAt).toLocaleString(),
     '<b>Policy:</b> Fail on [' + r.policy.failOn.join(', ') + ']',
-    '<b>AI Mode:</b> ' + (r.findings.some(f => f.aiSuggestion?.source === 'gemini') ? '🤖 Gemini' : '📋 Fallback'),
+    '<b>AI Mode:</b> ' + (r.findings.some(f => f.aiSuggestion?.source === 'groq') ? '🤖 LLaMA 3.3 (Groq)' : '📋 Fallback'),
   ].join('<br/>');
 
   // Findings

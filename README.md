@@ -87,17 +87,28 @@ Guardrail intelligently groups similar vulnerabilities (e.g., duplicate dependen
 - Official references directly to the OWASP Cheat Sheet Series.
 
 ### ⚙️ `.guardrailrc.json` Configuration
-Tune the scanner per-project. Disable specific rules, adjust failure thresholds, or ignore legacy paths.
+The scanner reads **`<scan-path>/.guardrailrc.json` only** (it does not walk parent folders). Use it to toggle rules, ignore paths, filter noisy findings, and set policy.
+
+- **`policy.failOn`:** severities that fail the build (unless overridden by CLI `--fail-on=`).
+- **`policy.scoreThreshold`:** when **greater than 0**, the run **also fails** if the security score falls **below** this value (combined with severity policy).
+- **`ignore.paths`:** glob patterns (`*`, `**`) relative to the scan root — matching files are skipped.
+- **`ignore.findings`:** suppress findings by `type:…`, `title:…` substring, or exact title match.
 
 ```json
 {
   "policy": {
-    "failOn": ["high", "critical"]
+    "failOn": ["high", "critical"],
+    "scoreThreshold": 0
   },
   "rules": {
     "secrets": true,
     "injection": true,
-    "xss": true
+    "xss": true,
+    "dependencies": true
+  },
+  "ignore": {
+    "paths": ["node_modules/**", "dist/**"],
+    "findings": ["type:dependency"]
   },
   "report": {
     "formats": ["json", "html", "sarif", "markdown"],
@@ -105,6 +116,8 @@ Tune the scanner per-project. Disable specific rules, adjust failure thresholds,
   }
 }
 ```
+
+**CLI vs config:** if you pass `--fail-on=…`, it **overrides** `policy.failOn` from the file for that run.
 
 ### 🤖 CI/CD Integration (GitHub PR Bot)
 Guardrail is built for enterprise pipelines. The included GitHub Actions workflow automatically:

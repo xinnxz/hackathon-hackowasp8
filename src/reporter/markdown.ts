@@ -73,7 +73,7 @@ export function buildMarkdownReport(report: GuardrailReport): string {
     lines.push(`**Recommendation:** ${finding.recommendation}`, "");
 
     if (finding.aiSuggestion) {
-      const src = finding.aiSuggestion.source === "gemini" ? "🤖 Gemini AI" : "📋 Static";
+      const src = finding.aiSuggestion.source === "groq" ? "🤖 Groq (LLaMA)" : "📋 Static";
       lines.push(`**AI Fix Suggestion** _(${src})_`, "");
       lines.push(finding.aiSuggestion.explanation, "");
       lines.push("```");
