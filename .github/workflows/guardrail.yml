@@ -29,7 +29,14 @@ jobs:
       - name: Run OWASP Guardrail Scanner
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: npx tsx src/cli.ts scan . --with-ai
+        run: |
+          if [ -n "$GROQ_API_KEY" ]; then
+            echo "🤖 AI mode enabled (Groq API key found)"
+            npx tsx src/cli.ts scan . --with-ai
+          else
+            echo "📋 Running without AI (no GROQ_API_KEY secret configured)"
+            npx tsx src/cli.ts scan .
+          fi
 
       - name: Upload SARIF report to GitHub Security
         uses: github/codeql-action/upload-sarif@v3

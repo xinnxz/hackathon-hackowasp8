@@ -1,431 +1,319 @@
 export function buildDashboardHtml(): string {
-  return `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>OWASP Guardrail — Live Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root{--bg:#070d1a;--card:#0f1729;--border:#1e2d4a;--text:#e2e8f8;--muted:#6b7fa3;--critical:#ff4d6d;--high:#ff9f43;--medium:#ffd166;--low:#40c98d;--accent:#6d8eff;--ai:#a78bfa;}
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:24px;}
-    .wrap{max-width:1280px;margin:0 auto;}
-
-    /* NAV TABS */
-    .tabs{display:flex;gap:4px;margin-bottom:20px;background:#0a1020;border-radius:12px;padding:4px;width:fit-content;}
-    .tab{padding:8px 20px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);border:none;background:transparent;transition:.2s;}
-    .tab.active{background:var(--card);color:var(--text);}
-
-    /* HEADER */
-    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:16px;flex-wrap:wrap;}
-    .logo{font-size:22px;font-weight:700;color:var(--accent);}
-    .badge{padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px;}
-    .badge.pass{background:#0d2e1d;color:#4ade80;border:1px solid #15803d;}
-    .badge.fail{background:#2d0d1a;color:#f87171;border:1px solid #b91c1c;}
-
-    /* SCORE GAUGE */
-    .score-wrap{display:flex;align-items:center;gap:32px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
-    .gauge-svg{flex-shrink:0;}
-    .score-info h2{font-size:48px;font-weight:700;line-height:1;}
-    .score-info .grade{font-size:64px;font-weight:800;line-height:1;}
-    .score-info .label{color:var(--muted);font-size:15px;margin-top:6px;}
-    .score-info .sublabel{font-size:13px;color:var(--muted);margin-top:4px;}
-
-    /* STAT CARDS */
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
-    .stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
-    .stat .num{font-size:36px;font-weight:700;line-height:1.1;}
-    .stat .lbl{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px;}
-    .stat.critical .num{color:var(--critical);}
-    .stat.high .num{color:var(--high);}
-    .stat.medium .num{color:var(--medium);}
-    .stat.low .num{color:var(--low);}
-
-    /* CHARTS ROW */
-    .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-    .chart-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
-    .chart-card h3{font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
-
-    /* SEARCH */
-    .search-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
-    .search-row input{flex:1;min-width:200px;background:#0a1020;border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:14px;}
-    .search-row select{background:#0a1020;border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:14px;}
-
-    /* FINDINGS */
-    .finding{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden;}
-    .finding summary{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;padding:14px;cursor:pointer;list-style:none;}
-    .finding summary::-webkit-details-marker{display:none;}
-    .finding summary:hover{background:#1a2540;}
-    .sev{font-size:12px;font-weight:700;text-align:center;border-radius:6px;padding:4px 8px;text-transform:uppercase;}
-    .sev.critical{background:#3d0e1e;color:#ffa3b4;}
-    .sev.high{background:#3d2200;color:#ffd0a1;}
-    .sev.medium{background:#3d3200;color:#ffe99a;}
-    .sev.low{background:#0d2e1d;color:#a3e8c4;}
-    .finding-meta{font-size:12px;color:var(--muted);}
-    .finding-body{padding:0 14px 14px;border-top:1px solid var(--border);}
-    .finding-body p{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.6;}
-    .owasp-tag{display:inline-block;background:#1a2240;color:var(--accent);border-radius:4px;padding:2px 8px;font-size:12px;margin-top:6px;}
-    .ai-box{background:#12102b;border:1px solid #3d3575;border-radius:8px;padding:12px;margin-top:12px;}
-    .ai-box .ai-header{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ai);margin-bottom:8px;}
-    .ai-box pre{background:#0a0818;border:1px solid #2d2560;border-radius:6px;padding:10px;overflow:auto;font-size:13px;color:#c4b5fd;position:relative;}
-    .copy-btn{position:absolute;top:6px;right:6px;background:#3d3575;border:none;color:#c4b5fd;border-radius:4px;padding:3px 8px;font-size:11px;cursor:pointer;}
-    .copy-btn:hover{background:#4d45a5;}
-    .ai-refs{margin-top:8px;font-size:12px;}
-    .ai-refs a{color:#7c9cff;}
-
-    /* RADAR */
-    .radar-wrap{display:flex;justify-content:center;}
-
-    /* OWASP TABLE */
-    .owasp-table{width:100%;border-collapse:collapse;font-size:13px;}
-    .owasp-table th,.owasp-table td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);}
-    .owasp-table th{color:var(--muted);font-weight:600;}
-    .owasp-bar{height:8px;background:#1e2d4a;border-radius:4px;overflow:hidden;}
-    .owasp-bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .6s ease;}
-
-    /* EMPTY */
-    .empty{text-align:center;padding:48px;color:var(--muted);}
-    .section{display:none;}.section.active{display:block;}
-
-    @media(max-width:700px){.charts-row{grid-template-columns:1fr;}.score-wrap{flex-direction:column;}}
-  </style>
+  return `<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OWASP Guardrail - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"><\/script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-tertiary-fixed-variant":"#842225",tertiary:"#a43a3a","on-error":"#ffffff","on-background":"#131e19","on-primary-container":"#00422b","surface-dim":"#d0ddd5","secondary-fixed-dim":"#9ed2b5","inverse-surface":"#27332d",surface:"#f0fdf4",primary:"#006c49","surface-container-high":"#deebe3","on-tertiary-fixed":"#410005","on-primary-fixed":"#002113",secondary:"#376850","on-surface-variant":"#3c4a42","on-tertiary":"#ffffff","surface-container-lowest":"#ffffff",outline:"#6c7a71","inverse-primary":"#4edea3",background:"#f0fdf4","surface-bright":"#f0fdf4","surface-variant":"#d9e6dd","on-primary-fixed-variant":"#005236","surface-container-highest":"#d9e6dd","on-surface":"#131e19","on-secondary-container":"#3c6c54","on-secondary-fixed-variant":"#1e4f3a","surface-tint":"#006c49","on-primary":"#ffffff","surface-container":"#e4f1e8","surface-container-low":"#eaf7ee","on-tertiary-container":"#711419","tertiary-container":"#fc7c78","on-secondary-fixed":"#002113","outline-variant":"#bbcabf","primary-fixed":"#6ffbbe","on-secondary":"#ffffff","on-error-container":"#93000a","tertiary-fixed-dim":"#ffb3af","inverse-on-surface":"#e7f4eb","secondary-fixed":"#baeed1","primary-container":"#10b981","secondary-container":"#b7ebce","error-container":"#ffdad6","primary-fixed-dim":"#4edea3",error:"#ba1a1a","tertiary-fixed":"#ffdad7"},fontFamily:{headline:["Inter"],body:["Inter"],label:["Inter"]}}}}
+<\/script>
+<style type="text/tailwindcss">
+.tick-mark{position:absolute;width:2px;height:6px;background:#bbcabf;left:50%;top:0;transform-origin:50% 48px;}
+</style>
 </head>
-<body>
-<div class="wrap">
-  <div class="header">
-    <div class="logo">⛨ OWASP Guardrail</div>
-    <div id="status-badge" class="badge">Loading...</div>
-  </div>
+<body class="bg-surface text-on-surface font-body min-h-screen pt-16">
 
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('overview')">Overview</button>
-    <button class="tab" onclick="showTab('findings')">Findings</button>
-    <button class="tab" onclick="showTab('owasp')">OWASP</button>
-    <button class="tab" onclick="showTab('ai')">AI Suggestions</button>
-  </div>
-
-  <!-- OVERVIEW TAB -->
-  <div id="tab-overview" class="section active">
-    <div class="score-wrap">
-      <svg class="gauge-svg" width="160" height="160" viewBox="0 0 160 160">
-        <circle cx="80" cy="80" r="64" fill="none" stroke="#1e2d4a" stroke-width="16"/>
-        <circle id="gauge-arc" cx="80" cy="80" r="64" fill="none" stroke="#6d8eff" stroke-width="16"
-          stroke-linecap="round" stroke-dasharray="0 402" stroke-dashoffset="100"
-          style="transition:stroke-dasharray 1.2s ease;transform:rotate(-90deg);transform-origin:80px 80px"/>
-        <text id="gauge-num" x="80" y="76" text-anchor="middle" font-size="28" font-weight="700" fill="#e2e8f8">—</text>
-        <text id="gauge-grade" x="80" y="104" text-anchor="middle" font-size="20" font-weight="800" fill="#6d8eff">—</text>
-      </svg>
-      <div class="score-info">
-        <div class="grade" id="score-grade" style="color:#6d8eff">—</div>
-        <div class="label" id="score-label">Loading...</div>
-        <div class="sublabel" id="score-sublabel"></div>
-      </div>
-    </div>
-    <div class="stats">
-      <div class="stat critical"><div class="num" id="cnt-critical">—</div><div class="lbl">Critical</div></div>
-      <div class="stat high"><div class="num" id="cnt-high">—</div><div class="lbl">High</div></div>
-      <div class="stat medium"><div class="num" id="cnt-medium">—</div><div class="lbl">Medium</div></div>
-      <div class="stat low"><div class="num" id="cnt-low">—</div><div class="lbl">Low</div></div>
-      <div class="stat"><div class="num" id="cnt-total">—</div><div class="lbl">Total</div></div>
-    </div>
-    <div class="charts-row">
-      <div class="chart-card">
-        <h3>Severity Distribution</h3>
-        <svg id="donut" width="180" height="180" viewBox="0 0 180 180" style="display:block;margin:0 auto">
-          <circle cx="90" cy="90" r="64" fill="none" stroke="#1e2d4a" stroke-width="24"/>
-        </svg>
-      </div>
-      <div class="chart-card">
-        <h3>Scan Info</h3>
-        <p id="scan-info" style="font-size:13px;color:var(--muted);line-height:1.8;"></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- FINDINGS TAB -->
-  <div id="tab-findings" class="section">
-    <div class="search-row">
-      <input type="text" id="search-input" placeholder="Search findings..." oninput="filterFindings()"/>
-      <select id="sev-filter" onchange="filterFindings()">
-        <option value="">All severities</option>
-        <option value="critical">Critical</option>
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
-      </select>
-      <select id="type-filter" onchange="filterFindings()">
-        <option value="">All types</option>
-        <option value="secret">Secret</option>
-        <option value="injection">Injection</option>
-        <option value="xss">XSS</option>
-        <option value="misconfiguration">Misconfiguration</option>
-        <option value="dependency">Dependency</option>
-        <option value="access-control">Access Control</option>
-        <option value="crypto">Crypto</option>
-        <option value="ssrf">SSRF</option>
-      </select>
-    </div>
-    <div id="findings-list"></div>
-  </div>
-
-  <!-- OWASP TAB -->
-  <div id="tab-owasp" class="section">
-    <div class="chart-card" style="margin-bottom:16px;">
-      <h3>OWASP Top 10 Coverage</h3>
-      <table class="owasp-table" id="owasp-table">
-        <thead><tr><th>Category</th><th>Name</th><th>Findings</th><th>Distribution</th></tr></thead>
-        <tbody id="owasp-tbody"></tbody>
-      </table>
-    </div>
-    <div class="chart-card">
-      <h3>Radar Chart</h3>
-      <div class="radar-wrap"><svg id="radar-svg" width="280" height="280" viewBox="0 0 280 280"></svg></div>
-    </div>
-  </div>
-
-  <!-- AI TAB -->
-  <div id="tab-ai" class="section">
-    <div id="ai-list"></div>
-  </div>
+<!-- NAV (identical to Stitch) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-10 h-16 shadow-[0_4px_24px_rgba(19,30,25,0.04)] text-sm font-medium tracking-wide">
+<div class="flex items-center gap-8">
+<div class="text-xl font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">shield</span> OWASP Guardrail
 </div>
+<ul class="hidden md:flex items-center gap-6">
+<li><a class="text-primary border-b-2 border-primary pb-1 font-semibold" href="#">Dashboard</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">Findings</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">OWASP Map</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">AI Fixes</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">CI/CD</a></li>
+</ul>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="bg-surface-container-lowest border-none shadow-[0_2px_8px_rgba(19,30,25,0.02)] focus:ring-0 rounded-full py-1.5 pl-10 pr-4 text-sm w-48" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-on-surface/70 hover:text-primary hover:bg-surface-container-high rounded-full transition-all duration-200"><span class="material-symbols-outlined">settings</span></button>
+<button class="p-2 text-on-surface/70 hover:text-primary hover:bg-surface-container-high rounded-full transition-all duration-200 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center ml-2 shadow-sm border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-primary-container text-sm" style="font-variation-settings:'FILL' 1;">person</span>
+</div>
+</div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+<!-- HEADER -->
+<header class="flex flex-col lg:flex-row justify-between items-start gap-8 mb-12">
+<div class="space-y-2">
+<h1 class="text-on-surface font-bold text-[3.5rem] leading-tight tracking-tight">Security Overview</h1>
+<p class="text-on-surface-variant font-medium text-xl">Welcome Back, Security Team 👋</p>
+</div>
+<!-- AI ASSISTANT CARD -->
+<div class="bg-gradient-to-br from-surface-container-lowest to-surface-container-low rounded-lg p-5 shadow-[0_8px_32px_rgba(19,30,25,0.03)] border border-primary/10 w-full lg:w-96">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-on-primary-container text-sm" style="font-variation-settings:'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h3 class="font-headline text-sm font-semibold text-on-surface">AI Fix Assistant</h3>
+<p class="text-[10px] text-primary font-medium flex items-center gap-1" id="ai-status"><span class="w-1 h-1 rounded-full bg-primary"></span> Online</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 text-xs bg-primary-container hover:brightness-105 transition-all text-on-primary-container rounded-md font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">build</span> Fix Critical
+</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-3 relative shadow-sm text-sm">
+<p class="text-on-surface font-medium" id="ai-msg">How can I help secure your code?</p>
+</div>
+<div class="flex gap-2 mt-3">
+<button class="flex-1 py-1.5 px-2 bg-transparent border border-outline-variant/30 hover:bg-surface-container-high transition-colors text-on-surface rounded-md font-medium text-[11px] flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span> Report
+</button>
+<button class="flex-1 py-1.5 px-2 bg-transparent border border-outline-variant/30 hover:bg-surface-container-high transition-colors text-on-surface rounded-md font-medium text-[11px] flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">policy</span> Audit
+</button>
+</div>
+</div>
+</header>
+
+<!-- STAT CARDS ROW 1 (3 cols) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<!-- Total Findings -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Total Findings</span>
+<span class="material-symbols-outlined text-outline-variant">bug_report</span>
+</div>
+<div>
+<div class="font-headline text-[3.5rem] font-bold text-on-surface leading-none mb-2" id="total-num">—</div>
+<div class="h-8 w-full relative mt-4">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 20">
+<path id="sparkline" d="M0,15 Q10,10 20,18 T40,12 T60,16 T80,5 T100,8" fill="none" stroke="#ba1a1a" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Critical Issues -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Critical Issues</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings:'FILL' 1;">warning</span>
+</div>
+<div>
+<div class="font-headline text-[3.5rem] font-bold text-error leading-none mb-2" id="crit-num">—</div>
+<p class="text-sm text-outline flex items-center gap-1 mt-4" id="crit-sub"></p>
+</div>
+</div>
+<!-- Security Score -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Security Score</span>
+<span class="material-symbols-outlined text-outline-variant">speed</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24">
+<div class="w-full h-full rounded-full border-[8px] border-surface-container"></div>
+<div class="absolute inset-0">${Array.from({length:12},(_,i)=>`<div class="tick-mark" style="transform:rotate(${i*30}deg)"></div>`).join('')}</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="font-headline text-2xl font-bold leading-none" id="score-display">—<span class="text-xs text-outline font-medium">/100</span></div>
+</div>
+</div>
+<div class="flex-1"><p class="text-xs text-outline leading-tight" id="score-desc">Loading...</p></div>
+</div>
+</div>
+<!-- Grade -->
+<div id="grade-card" class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label text-xs uppercase tracking-wider font-bold" id="grade-lbl">Grade</span>
+<span class="material-symbols-outlined" id="grade-icon">assignment_late</span>
+</div>
+<div class="flex flex-col h-full justify-end">
+<div class="font-headline text-[4rem] font-black leading-none mb-2" id="grade-val">—</div>
+<p class="text-sm font-medium flex items-start gap-1" id="grade-msg"></p>
+</div>
+</div>
+<!-- OWASP Top 10 Coverage -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)]">
+<h3 class="font-headline text-sm font-semibold text-on-surface mb-6 uppercase tracking-wider">OWASP Top 10 Coverage</h3>
+<div class="h-32 flex items-end justify-between gap-1" id="owasp-bars"></div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-outline">A01</span>
+<span class="text-[10px] font-bold text-primary" id="owasp-peak">—</span>
+<span class="text-[10px] text-outline">A10</span>
+</div>
+</div>
+<!-- Severity Distribution -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col">
+<h3 class="font-headline text-sm font-semibold text-on-surface mb-6 uppercase tracking-wider">Severity Distribution</h3>
+<div class="flex items-center justify-between gap-4">
+<div class="relative w-24 h-24">
+<div id="donut" class="w-full h-full rounded-full border-[10px] border-surface-container relative"></div>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-lg font-bold" id="donut-center">—</span>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-error"></div> Crit</span><span id="sev-cr">—</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> High</span><span id="sev-hi">—</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div> Med</span><span id="sev-me">—</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div> Low</span><span id="sev-lo">—</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- RECENT FINDINGS TABLE -->
+<section class="w-full">
+<div class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_8px_32px_rgba(19,30,25,0.03)]">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-xl font-semibold text-on-surface">Recent Findings</h3>
+<button class="text-sm text-primary font-medium hover:text-primary-container transition-colors">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-2 border-surface-variant text-outline font-label text-xs uppercase tracking-wider">
+<th class="pb-4 font-bold">Vulnerability</th>
+<th class="pb-4 font-bold">Severity</th>
+<th class="pb-4 font-bold">Status</th>
+<th class="pb-4 font-bold text-right">Action</th>
+</tr>
+</thead>
+<tbody id="findings-tbody"></tbody>
+</table>
+</div>
+</div>
+</section>
+<div class="h-16"></div>
+</main>
 
 <script>
-let reportData = null;
-
-async function init() {
-  try {
-    const res = await fetch('/api/report');
-    reportData = await res.json();
-    render();
-  } catch(e) {
-    document.body.innerHTML = '<div class="empty"><h2>Failed to load report</h2><p>Make sure the dashboard server is running</p></div>';
+async function init(){
+  try{
+    const res=await fetch('/api/report');
+    const r=await res.json();
+    render(r);
+  }catch(e){
+    document.querySelector('main').innerHTML='<div style="text-align:center;padding:60px;color:#6c7a71;"><h2>No report found</h2><p>Run a scan first: npm run scan:demo</p></div>';
   }
 }
 
-function render() {
-  const r = reportData;
-  const sc = r.securityScore;
+function render(r){
+  const sc=r.securityScore;
+  const cr=r.summary.critical, hi=r.summary.high, me=r.summary.medium, lo=r.summary.low;
+  const total=r.findings.length;
+  const isBad=sc.score<50;
 
-  // Status badge
-  const badge = document.getElementById('status-badge');
-  badge.textContent = r.passed ? '✔ PASS' : '✖ FAIL';
-  badge.className = 'badge ' + (r.passed ? 'pass' : 'fail');
+  // Total
+  anim('total-num',total);
+  document.getElementById('sparkline').setAttribute('stroke',isBad?'#ba1a1a':'#10b981');
 
-  // Score gauge
-  const circumference = 2 * Math.PI * 64;
-  const arc = (sc.score / 100) * circumference;
-  setTimeout(() => {
-    document.getElementById('gauge-arc').setAttribute('stroke-dasharray', arc + ' ' + (circumference - arc));
-    document.getElementById('gauge-arc').setAttribute('stroke', sc.color || '#6d8eff');
-  }, 100);
-  document.getElementById('gauge-num').textContent = sc.score;
-  document.getElementById('gauge-grade').textContent = sc.grade;
-  document.getElementById('score-grade').textContent = sc.grade;
-  document.getElementById('score-grade').style.color = sc.color || '#6d8eff';
-  document.getElementById('score-label').textContent = sc.label;
-  document.getElementById('score-sublabel').textContent = 'Score: ' + sc.score + '/100';
+  // Critical
+  anim('crit-num',cr);
+  const critEl=document.getElementById('crit-num');
+  critEl.className=cr>0?'font-headline text-[3.5rem] font-bold text-error leading-none mb-2':'font-headline text-[3.5rem] font-bold text-primary leading-none mb-2';
+  document.getElementById('crit-sub').innerHTML=cr>0?'<span class="material-symbols-outlined text-xs text-error">priority_high</span> Requires immediate attention':'<span class="material-symbols-outlined text-xs text-primary">check_circle</span> No critical issues';
 
-  // Counters with animation
-  animateCount('cnt-critical', r.summary.critical);
-  animateCount('cnt-high', r.summary.high);
-  animateCount('cnt-medium', r.summary.medium);
-  animateCount('cnt-low', r.summary.low);
-  animateCount('cnt-total', r.findings.length);
+  // Score
+  const scoreEl=document.getElementById('score-display');
+  scoreEl.className='font-headline text-2xl font-bold leading-none '+(isBad?'text-error':'text-primary');
+  scoreEl.innerHTML=sc.score+'<span class="text-xs text-outline font-medium">/100</span>';
+  document.getElementById('score-desc').textContent=sc.label;
 
-  // Donut chart
-  renderDonut(r.summary);
+  // Grade
+  const gradeColor=isBad?'text-error':'text-primary';
+  document.getElementById('grade-val').textContent=sc.grade;
+  document.getElementById('grade-val').className='font-headline text-[4rem] font-black leading-none mb-2 '+gradeColor;
+  document.getElementById('grade-lbl').className='font-label text-xs uppercase tracking-wider font-bold '+gradeColor;
+  document.getElementById('grade-icon').className='material-symbols-outlined '+gradeColor;
+  document.getElementById('grade-icon').textContent=isBad?'assignment_late':'verified_user';
+  const gradeMsg=sc.score>=90?'Excellent — No critical findings':sc.score>=75?'Good — Minor issues only':sc.score>=50?'Needs improvement':'Immediate action required';
+  document.getElementById('grade-msg').innerHTML=(isBad?'<span class="material-symbols-outlined text-sm mt-0.5">priority_high</span> ':'')+gradeMsg;
+  document.getElementById('grade-msg').className='text-sm font-medium flex items-start gap-1 '+gradeColor;
+  const gc=document.getElementById('grade-card');
+  gc.className=isBad?'bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] bg-error/5 border border-error/20 flex flex-col justify-between':'bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between';
 
-  // Scan info
-  document.getElementById('scan-info').innerHTML = [
-    '<b>Target:</b> ' + r.scannedPath,
-    '<b>Generated:</b> ' + new Date(r.generatedAt).toLocaleString(),
-    '<b>Policy:</b> Fail on [' + r.policy.failOn.join(', ') + ']',
-    '<b>AI Mode:</b> ' + (r.findings.some(f => f.aiSuggestion?.source === 'groq') ? '🤖 LLaMA 3.3 (Groq)' : '📋 Fallback'),
-  ].join('<br/>');
+  // Severity Distribution
+  document.getElementById('sev-cr').textContent=cr;
+  document.getElementById('sev-hi').textContent=hi;
+  document.getElementById('sev-me').textContent=me;
+  document.getElementById('sev-lo').textContent=lo;
+  document.getElementById('donut-center').textContent=total;
+  renderDonut(cr,hi,me,lo);
 
-  // Findings
+  // OWASP bars
+  renderOwaspBars(r.findings);
+
+  // AI status
+  const hasAi=r.findings.some(f=>f.aiSuggestion&&f.aiSuggestion.source==='groq');
+  if(hasAi) document.getElementById('ai-status').innerHTML='<span class="w-1 h-1 rounded-full bg-primary"></span> Groq LLaMA 3.3';
+  document.getElementById('ai-msg').textContent=r.passed?'Great job! Your code is looking secure.':'I found '+total+' vulnerabilities. Click Fix Critical to auto-remediate.';
+
+  // Findings table
   renderFindings(r.findings);
-
-  // OWASP
-  renderOwasp(r.findings);
-
-  // AI tab
-  renderAiTab(r.findings);
 }
 
-function animateCount(id, target) {
-  const el = document.getElementById(id);
-  let cur = 0;
-  const step = Math.max(1, Math.ceil(target / 30));
-  const timer = setInterval(() => {
-    cur = Math.min(cur + step, target);
-    el.textContent = cur;
-    if (cur >= target) clearInterval(timer);
-  }, 30);
+function anim(id,target){
+  const el=document.getElementById(id);
+  if(target===0){el.textContent='0';return;}
+  let n=0;const step=Math.max(1,Math.ceil(target/25));
+  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n;if(n>=target)clearInterval(t);},30);
 }
 
-function renderDonut(summary) {
-  const colors = { critical: '#ff4d6d', high: '#ff9f43', medium: '#ffd166', low: '#40c98d' };
-  const total = Math.max(1, summary.critical + summary.high + summary.medium + summary.low);
-  const cx = 90, cy = 90, r = 64, sw = 24;
-  const circ = 2 * Math.PI * r;
-  let offset = 0;
-  let svgParts = '<circle cx="90" cy="90" r="64" fill="none" stroke="#1e2d4a" stroke-width="24"/>';
-  for (const [key, color] of Object.entries(colors)) {
-    const count = summary[key];
-    if (!count) continue;
-    const dash = (count / total) * circ;
-    const gap = circ - dash;
-    svgParts += \`<circle cx="\${cx}" cy="\${cy}" r="\${r}" fill="none" stroke="\${color}" stroke-width="\${sw}"
-      stroke-dasharray="0 \${circ}" stroke-dashoffset="\${circ * 0.25 - offset}"
-      style="transform:rotate(-90deg);transform-origin:\${cx}px \${cy}px;transition:stroke-dasharray 1s \${0.2}s ease"
-      data-dash="\${dash}" data-gap="\${gap}"/>\`;
-    offset += dash;
+function renderDonut(cr,hi,me,lo){
+  const el=document.getElementById('donut');
+  const total=cr+hi+me+lo;
+  if(!total){el.style.borderColor='#e4f1e8';return;}
+  const stops=[];let cur=0;
+  if(cr){const p=(cr/total)*100;stops.push('#ba1a1a '+cur+'% '+(cur+p)+'%');cur+=p;}
+  if(hi){const p=(hi/total)*100;stops.push('#f97316 '+cur+'% '+(cur+p)+'%');cur+=p;}
+  if(me){const p=(me/total)*100;stops.push('#eab308 '+cur+'% '+(cur+p)+'%');cur+=p;}
+  if(lo){const p=(lo/total)*100;stops.push('#006c49 '+cur+'% '+(cur+p)+'%');cur+=p;}
+  el.style.background='conic-gradient('+stops.join(',')+')';
+  el.style.borderColor='transparent';
+}
+
+function renderOwaspBars(findings){
+  const ids=['A01:2021','A02:2021','A03:2021','A04:2021','A05:2021','A06:2021','A07:2021','A08:2021','A09:2021','A10:2021'];
+  const counts={};let max=0;let peakId='';
+  findings.forEach(f=>{if(f.owaspCategory){const id=f.owaspCategory.id;counts[id]=(counts[id]||0)+1;if(counts[id]>max){max=counts[id];peakId=id;}}});
+  const container=document.getElementById('owasp-bars');
+  container.innerHTML=ids.map(id=>{
+    const c=counts[id]||0;
+    const pct=max?Math.max(5,(c/max)*100):5;
+    const isMax=id===peakId&&c>0;
+    return '<div class="w-full '+(isMax?'bg-primary':'bg-primary/20')+' rounded-t-sm" style="height:'+pct+'%"></div>';
+  }).join('');
+  document.getElementById('owasp-peak').textContent=peakId?peakId.replace(':2021',''):'—';
+}
+
+function renderFindings(findings){
+  const tbody=document.getElementById('findings-tbody');
+  if(!findings.length){
+    tbody.innerHTML='<tr><td colspan="4" class="py-8 text-center text-outline">🎉 No findings — clean scan!</td></tr>';
+    return;
   }
-  document.getElementById('donut').innerHTML = svgParts;
-  // Animate donut segments
-  setTimeout(() => {
-    document.querySelectorAll('#donut circle[data-dash]').forEach(el => {
-      const d = el.getAttribute('data-dash'), g = el.getAttribute('data-gap');
-      el.setAttribute('stroke-dasharray', d + ' ' + g);
-    });
-  }, 200);
+  const sevClass={critical:'bg-error/10 text-error',high:'bg-orange-500/10 text-orange-600',medium:'bg-yellow-500/10 text-yellow-600',low:'bg-primary/10 text-primary'};
+  tbody.innerHTML=findings.map(f=>'<tr class="border-b border-surface-variant/50 hover:bg-surface-container-low/30 transition-colors">'
+    +'<td class="py-5 font-medium text-on-surface">'+esc(f.title)+'</td>'
+    +'<td class="py-5"><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold '+(sevClass[f.severity]||'')+'">'+(f.severity.charAt(0).toUpperCase()+f.severity.slice(1))+'</span></td>'
+    +'<td class="py-5"><span class="text-sm text-outline">Open</span></td>'
+    +'<td class="py-5 text-right"><button class="text-primary hover:text-primary-container"><span class="material-symbols-outlined text-lg">chevron_right</span></button></td>'
+    +'</tr>').join('');
 }
 
-function renderFindings(findings) {
-  const container = document.getElementById('findings-list');
-  if (!findings.length) { container.innerHTML = '<div class="empty">🎉 No findings — clean scan!</div>'; return; }
-  container.innerHTML = findings.map((f, i) => buildFindingCard(f, i, 'fd')).join('');
-  addCopyListeners('fd');
-}
-
-function buildFindingCard(f, i, prefix) {
-  const ai = f.aiSuggestion;
-  const aiHtml = ai ? \`<div class="ai-box">
-    <div class="ai-header">🤖 AI Fix Suggestion <span style="font-size:11px;opacity:.7;margin-left:6px">(\${ai.source})</span></div>
-    <p style="font-size:13px;color:#a78bfa;margin-bottom:8px">\${esc(ai.explanation)}</p>
-    <div style="position:relative"><pre id="\${prefix}-pre-\${i}">\${esc(ai.fixedCode)}</pre><button class="copy-btn" data-target="\${prefix}-pre-\${i}">Copy</button></div>
-    \${ai.references.map(r => \`<div class="ai-refs"><a href="\${r}" target="_blank">\${r}</a></div>\`).join('')}
-  </div>\` : '';
-  return \`<details class="finding" data-sev="\${f.severity}" data-type="\${f.type}" data-text="\${esc(f.title + f.file + f.description).toLowerCase()}">
-    <summary>
-      <span class="sev \${f.severity}">\${f.severity.toUpperCase()}</span>
-      <div><div style="font-size:14px;font-weight:500">\${esc(f.title)}</div><div class="finding-meta">\${esc(f.file)}:\${f.line}</div></div>
-      <span style="font-size:18px;color:var(--muted)">›</span>
-    </summary>
-    <div class="finding-body">
-      <p>\${esc(f.description)}</p>
-      <p><strong>Recommendation:</strong> \${esc(f.recommendation)}</p>
-      \${f.owaspCategory ? \`<span class="owasp-tag">\${f.owaspCategory.id} \${f.owaspCategory.name}</span>\` : ''}
-      \${aiHtml}
-    </div>
-  </details>\`;
-}
-
-function filterFindings() {
-  const q = document.getElementById('search-input').value.toLowerCase();
-  const sev = document.getElementById('sev-filter').value;
-  const type = document.getElementById('type-filter').value;
-  document.querySelectorAll('#findings-list details').forEach(el => {
-    const matchQ = !q || el.dataset.text.includes(q);
-    const matchS = !sev || el.dataset.sev === sev;
-    const matchT = !type || el.dataset.type === type;
-    el.style.display = matchQ && matchS && matchT ? '' : 'none';
-  });
-}
-
-function renderOwasp(findings) {
-  const counts = {};
-  const names = {};
-  const links = {};
-  for (const f of findings) {
-    if (f.owaspCategory) {
-      counts[f.owaspCategory.id] = (counts[f.owaspCategory.id] || 0) + 1;
-      names[f.owaspCategory.id] = f.owaspCategory.name;
-      links[f.owaspCategory.id] = f.owaspCategory.link;
-    }
-  }
-  const max = Math.max(1, ...Object.values(counts));
-  const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
-  document.getElementById('owasp-tbody').innerHTML = sorted.map(([id, cnt]) =>
-    \`<tr>
-      <td><a href="\${links[id]}" target="_blank" style="color:var(--accent)">\${id}</a></td>
-      <td>\${names[id] || ''}</td>
-      <td><strong>\${cnt}</strong></td>
-      <td style="width:200px"><div class="owasp-bar"><div class="owasp-bar-fill" style="width:\${(cnt/max*100).toFixed(1)}%"></div></div></td>
-    </tr>\`
-  ).join('') || '<tr><td colspan="4" style="color:var(--muted)">No OWASP mappings found.</td></tr>';
-  renderRadar(counts, names);
-}
-
-function renderRadar(counts, names) {
-  const ids = Object.keys(counts);
-  if (!ids.length) return;
-  const max = Math.max(...Object.values(counts), 1);
-  const cx = 140, cy = 140, r = 100, n = ids.length;
-  const colors = ['#6d8eff','#ff4d6d','#ff9f43','#ffd166','#40c98d','#a78bfa','#34d399'];
-  let svg = '';
-  // Grid circles
-  for (let l = 1; l <= 4; l++) svg += \`<circle cx="\${cx}" cy="\${cy}" r="\${r * l/4}" fill="none" stroke="#1e2d4a" stroke-width="1"/>\`;
-  // Axes and labels
-  ids.forEach((id, i) => {
-    const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
-    const x2 = cx + r * Math.cos(angle), y2 = cy + r * Math.sin(angle);
-    const lx = cx + (r + 18) * Math.cos(angle), ly = cy + (r + 18) * Math.sin(angle);
-    svg += \`<line x1="\${cx}" y1="\${cy}" x2="\${x2}" y2="\${y2}" stroke="#1e2d4a"/>\`;
-    svg += \`<text x="\${lx}" y="\${ly}" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#6b7fa3">\${id.replace(':2021','')}</text>\`;
-  });
-  // Data polygon
-  const pts = ids.map((id, i) => {
-    const val = (counts[id] || 0) / max;
-    const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
-    return (cx + r * val * Math.cos(angle)) + ',' + (cy + r * val * Math.sin(angle));
-  });
-  svg += \`<polygon points="\${pts.join(' ')}" fill="rgba(109,142,255,.15)" stroke="#6d8eff" stroke-width="2"/>\`;
-  ids.forEach((id, i) => {
-    const val = (counts[id] || 0) / max;
-    const angle = (i / n) * 2 * Math.PI - Math.PI / 2;
-    svg += \`<circle cx="\${cx + r * val * Math.cos(angle)}" cy="\${cy + r * val * Math.sin(angle)}" r="5" fill="#6d8eff"/>\`;
-  });
-  document.getElementById('radar-svg').innerHTML = svg;
-}
-
-function renderAiTab(findings) {
-  const withAi = findings.filter(f => f.aiSuggestion);
-  const container = document.getElementById('ai-list');
-  if (!withAi.length) { container.innerHTML = '<div class="empty">No AI suggestions. Run with --with-ai flag.</div>'; return; }
-  container.innerHTML = withAi.map((f, i) => buildFindingCard(f, i, 'ai')).join('');
-  addCopyListeners('ai');
-}
-
-function addCopyListeners(prefix) {
-  document.querySelectorAll(\`.copy-btn[data-target^="\${prefix}"]\`).forEach(btn => {
-    btn.addEventListener('click', () => {
-      const pre = document.getElementById(btn.dataset.target);
-      navigator.clipboard.writeText(pre.textContent || '').then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
-      });
-    });
-  });
-}
-
-function showTab(name) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
-}
-
-function esc(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';}
 
 init();
-</script>
-</body>
-</html>`;
+<\/script>
+</body></html>`;
 }

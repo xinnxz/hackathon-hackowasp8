@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OWASP Guardrail - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#842225",
+                      "tertiary": "#a43a3a",
+                      "on-error": "#ffffff",
+                      "on-background": "#131e19",
+                      "on-primary-container": "#00422b",
+                      "surface-dim": "#d0ddd5",
+                      "secondary-fixed-dim": "#9ed2b5",
+                      "inverse-surface": "#27332d",
+                      "surface": "#f0fdf4",
+                      "primary": "#006c49",
+                      "surface-container-high": "#deebe3",
+                      "on-tertiary-fixed": "#410005",
+                      "on-primary-fixed": "#002113",
+                      "secondary": "#376850",
+                      "on-surface-variant": "#3c4a42",
+                      "on-tertiary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#6c7a71",
+                      "inverse-primary": "#4edea3",
+                      "background": "#f0fdf4",
+                      "surface-bright": "#f0fdf4",
+                      "surface-variant": "#d9e6dd",
+                      "on-primary-fixed-variant": "#005236",
+                      "surface-container-highest": "#d9e6dd",
+                      "on-surface": "#131e19",
+                      "on-secondary-container": "#3c6c54",
+                      "on-secondary-fixed-variant": "#1e4f3a",
+                      "surface-tint": "#006c49",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#e4f1e8",
+                      "surface-container-low": "#eaf7ee",
+                      "on-tertiary-container": "#711419",
+                      "tertiary-container": "#fc7c78",
+                      "on-secondary-fixed": "#002113",
+                      "outline-variant": "#bbcabf",
+                      "primary-fixed": "#6ffbbe",
+                      "on-secondary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#ffb3af",
+                      "inverse-on-surface": "#e7f4eb",
+                      "secondary-fixed": "#baeed1",
+                      "primary-container": "#10b981",
+                      "secondary-container": "#b7ebce",
+                      "error-container": "#ffdad6",
+                      "primary-fixed-dim": "#4edea3",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#ffdad7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "1rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Inter"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .security-score-ring {
+            background: conic-gradient(
+                #ba1a1a 0% 0%,
+                #e4f1e8 0% 100%
+            );
+        }
+        .tick-mark {
+            position: absolute;
+            width: 2px;
+            height: 6px;
+            background: #bbcabf;
+            left: 50%;
+            top: 0;
+            transform-origin: 50% 48px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen pt-16">
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-10 h-16 shadow-[0_4px_24px_rgba(19,30,25,0.04)] font-inter text-sm font-medium tracking-wide">
+<div class="flex items-center gap-8">
+<div class="text-xl font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">shield</span>
+                OWASP Guardrail
+            </div>
+<ul class="hidden md:flex items-center gap-6">
+<li><a class="text-primary border-b-2 border-primary pb-1 font-semibold" href="#">Dashboard</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">Findings</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">OWASP Map</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">AI Fixes</a></li>
+<li><a class="text-on-surface/60 hover:text-primary transition-all duration-200" href="#">CI/CD</a></li>
+</ul>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="bg-surface-container-lowest border-none shadow-[0_2px_8px_rgba(19,30,25,0.02)] focus:ring-0 focus:border-b-2 focus:border-primary-container rounded-full py-1.5 pl-10 pr-4 text-sm w-48" placeholder="Search..." type="text"/>
+</div>
+<button class="p-2 text-on-surface/70 hover:text-primary hover:bg-surface-container-high rounded-full transition-all duration-200"><span class="material-symbols-outlined">settings</span></button>
+<button class="p-2 text-on-surface/70 hover:text-primary hover:bg-surface-container-high rounded-full transition-all duration-200 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 shadow-sm border border-outline-variant/20">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLnTz9pbJHP0M2CXG4l6jxDt37k0sYO72RFedjEODTXQnvAXr8NyaSH8HMx1Crgnolydze-Ftfn1Tq45_CuPQaH_OZ8amSWt22YRzSr-W5BbW5TpNDWnUFZPyqvxY--flvd08j9gyUGotY0Fj6ko9zsRaCCRi4zWn1JSu_zqP3FiaMswLfV41RZFEWAe-56K7FGWIWVcRU8pXIhmR9-HrYRBIaBMsm5PF_oihLf4ogsRrCbWLpts70usETDG-qqoeeEAJAm0H3ow"/>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<header class="flex flex-col lg:flex-row justify-between items-start gap-8 mb-12">
+<div class="space-y-2">
+<h1 class="text-on-surface font-bold text-[3.5rem] leading-tight tracking-tight">Security Overview</h1>
+<p class="text-on-surface-variant font-medium text-xl">Welcome Back, Security Team 👋</p>
+</div>
+<div class="bg-gradient-to-br from-surface-container-lowest to-surface-container-low rounded-lg p-5 shadow-[0_8px_32px_rgba(19,30,25,0.03)] border border-primary/10 w-full lg:w-96">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-on-primary-container text-sm" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div>
+<h3 class="font-headline text-sm font-semibold text-on-surface">AI Fix Assistant</h3>
+<p class="text-[10px] text-primary font-medium flex items-center gap-1"><span class="w-1 h-1 rounded-full bg-primary"></span> Online</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-1.5 text-xs bg-primary-container hover:brightness-105 transition-all text-on-primary-container rounded-md font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">build</span> Fix Critical
+                        </button>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-lg p-3 relative shadow-sm text-sm">
+<p class="text-on-surface font-medium">How can I help secure your code?</p>
+</div>
+<div class="flex gap-2 mt-3">
+<button class="flex-1 py-1.5 px-2 bg-transparent border border-outline-variant/30 hover:bg-surface-container-high transition-colors text-on-surface rounded-md font-medium text-[11px] flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span> Report
+                    </button>
+<button class="flex-1 py-1.5 px-2 bg-transparent border border-outline-variant/30 hover:bg-surface-container-high transition-colors text-on-surface rounded-md font-medium text-[11px] flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">policy</span> Audit
+                    </button>
+</div>
+</div>
+</header>
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Total Findings</span>
+<span class="material-symbols-outlined text-outline-variant">bug_report</span>
+</div>
+<div>
+<div class="font-headline text-[3.5rem] font-bold text-on-surface leading-none mb-2">13</div>
+<div class="h-8 w-full relative mt-4">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 20">
+<path d="M0,15 Q10,10 20,18 T40,12 T60,16 T80,5 T100,8" fill="none" stroke="#ba1a1a" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Critical Issues</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<div class="font-headline text-[3.5rem] font-bold text-error leading-none mb-2">2</div>
+<p class="text-sm text-outline flex items-center gap-1 mt-4"><span class="material-symbols-outlined text-xs text-error">arrow_upward</span> +2 since yesterday</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label text-xs uppercase tracking-wider text-outline font-bold">Security Score</span>
+<span class="material-symbols-outlined text-outline-variant">speed</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24">
+<div class="w-full h-full rounded-full border-[8px] border-surface-container"></div>
+<div class="absolute inset-0">
+<div class="tick-mark" style="transform: rotate(0deg)"></div>
+<div class="tick-mark" style="transform: rotate(30deg)"></div>
+<div class="tick-mark" style="transform: rotate(60deg)"></div>
+<div class="tick-mark" style="transform: rotate(90deg)"></div>
+<div class="tick-mark" style="transform: rotate(120deg)"></div>
+<div class="tick-mark" style="transform: rotate(150deg)"></div>
+<div class="tick-mark" style="transform: rotate(180deg)"></div>
+<div class="tick-mark" style="transform: rotate(210deg)"></div>
+<div class="tick-mark" style="transform: rotate(240deg)"></div>
+<div class="tick-mark" style="transform: rotate(270deg)"></div>
+<div class="tick-mark" style="transform: rotate(300deg)"></div>
+<div class="tick-mark" style="transform: rotate(330deg)"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="font-headline text-2xl font-bold text-error leading-none">0<span class="text-xs text-outline font-medium">/100</span></div>
+</div>
+</div>
+<div class="flex-1">
+<p class="text-xs text-outline leading-tight">Critical vulnerability detection score based on system audit.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] bg-error/5 border border-error/20 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<span class="font-label text-xs uppercase tracking-wider text-error font-bold">Grade</span>
+<span class="material-symbols-outlined text-error">assignment_late</span>
+</div>
+<div class="flex flex-col h-full justify-end">
+<div class="font-headline text-[4rem] font-black text-error leading-none mb-2">F</div>
+<p class="text-sm font-medium text-error flex items-start gap-1"><span class="material-symbols-outlined text-sm mt-0.5">priority_high</span> Immediate action required</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)]">
+<h3 class="font-headline text-sm font-semibold text-on-surface mb-6 uppercase tracking-wider">OWASP Top 10 Coverage</h3>
+<div class="h-32 flex items-end justify-between gap-1">
+<div class="w-full bg-primary/20 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[75%]"></div>
+<div class="w-full bg-primary rounded-t-sm h-[100%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[30%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[20%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[45%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[55%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[35%]"></div>
+<div class="w-full bg-primary/20 rounded-t-sm h-[50%]"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] text-outline">A01</span>
+<span class="text-[10px] font-bold text-primary">A03</span>
+<span class="text-[10px] text-outline">A10</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_8px_32px_rgba(19,30,25,0.03)] flex flex-col">
+<h3 class="font-headline text-sm font-semibold text-on-surface mb-6 uppercase tracking-wider">Severity Distribution</h3>
+<div class="flex items-center justify-between gap-4">
+<div class="relative w-24 h-24">
+<div class="w-full h-full rounded-full border-[10px] border-surface-container relative">
+<div class="absolute inset-0 rounded-full border-[10px] border-error" style="clip-path: polygon(50% 50%, 100% 0, 100% 50%); transform: rotate(0deg);"></div>
+<div class="absolute inset-0 rounded-full border-[10px] border-orange-500" style="clip-path: polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%); transform: rotate(0deg);"></div>
+</div>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="text-lg font-bold">13</span>
+</div>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-error"></div> Crit</span><span>2</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-orange-500"></div> High</span><span>4</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div> Med</span><span>5</span></div>
+<div class="flex items-center justify-between text-[11px] font-medium"><span class="flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div> Low</span><span>2</span></div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full">
+<div class="bg-surface-container-lowest rounded-lg p-8 shadow-[0_8px_32px_rgba(19,30,25,0.03)]">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-xl font-semibold text-on-surface">Recent Findings</h3>
+<button class="text-sm text-primary font-medium hover:text-primary-container transition-colors">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b-2 border-surface-variant text-outline font-label text-xs uppercase tracking-wider">
+<th class="pb-4 font-bold">Vulnerability</th>
+<th class="pb-4 font-bold">Severity</th>
+<th class="pb-4 font-bold">Status</th>
+<th class="pb-4 font-bold text-right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-surface-variant/50 hover:bg-surface-container-low/30 transition-colors">
+<td class="py-5 font-medium text-on-surface">SQL Injection detected</td>
+<td class="py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-error/10 text-error">Critical</span>
+</td>
+<td class="py-5"><span class="text-sm text-outline">Open</span></td>
+<td class="py-5 text-right"><button class="text-primary hover:text-primary-container"><span class="material-symbols-outlined text-lg">chevron_right</span></button></td>
+</tr>
+<tr class="border-b border-surface-variant/50 hover:bg-surface-container-low/30 transition-colors">
+<td class="py-5 font-medium text-on-surface">Hardcoded JWT secret</td>
+<td class="py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-orange-500/10 text-orange-600">High</span>
+</td>
+<td class="py-5"><span class="text-sm text-outline">Investigating</span></td>
+<td class="py-5 text-right"><button class="text-primary hover:text-primary-container"><span class="material-symbols-outlined text-lg">chevron_right</span></button></td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors">
+<td class="py-5 font-medium text-on-surface">Wildcard CORS</td>
+<td class="py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-500/10 text-yellow-600">Medium</span>
+</td>
+<td class="py-5"><span class="text-sm text-outline">Open</span></td>
+<td class="py-5 text-right"><button class="text-primary hover:text-primary-container"><span class="material-symbols-outlined text-lg">chevron_right</span></button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<div class="h-16"></div>
+</main>
+
+</body></html>
