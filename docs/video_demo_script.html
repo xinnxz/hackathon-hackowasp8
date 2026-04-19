@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>video_demo_script.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%F0%9F%8E%AC-owasp-guardrail--video-demo-script-championship-edition">🎬 OWASP Guardrail — Video Demo Script (Championship Edition)</h1>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><strong>Duration:</strong> 3–4 minutes</li>
+<li><strong>Tone:</strong> Supremely confident, zero filler words</li>
+<li><strong>Language:</strong> English</li>
+<li><strong>Key Differentiator:</strong> We scan REAL production projects, not just demo apps</li>
+<li><strong>Tools:</strong> Terminal (dark theme, 16px font), Browser (Chrome fullscreen), OBS/Loom</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%93%8B-structure-6-scenes">📋 Structure (6 Scenes)</h2>
+<h3 id="%F0%9F%8E%AC-scene-1--opening-hook-15-seconds">🎬 SCENE 1 — Opening Hook (15 seconds)</h3>
+<p><strong>Visual:</strong> Dark screen → OWASP Guardrail banner fades in</p>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;74% of breached applications had known vulnerabilities that automated tooling could have caught. Enterprise scanners need JVMs, Docker, and paid licenses. We built OWASP Guardrail — a zero-dependency AI-powered scanner that detects, grades, and auto-fixes security flaws. And we're about to prove it on REAL production codebases — not just toy demos.&quot;</em></p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%8E%AC-scene-2--scan-real-project-1-aio-wallet-generator-40-seconds">🎬 SCENE 2 — Scan Real Project #1: AIO Wallet Generator (40 seconds)</h3>
+<p><strong>Visual:</strong> Terminal fullscreen</p>
+<p><strong>Type live:</strong></p>
+<pre class="hljs"><code><div>npx tsx src/cli.ts scan E:\DATA\Ngoding\aio-wallet-generator --with-ai
+</div></code></pre>
+<p><strong>While loading, narrate:</strong></p>
+<blockquote>
+<p><em>&quot;This is a real browser extension project — a cryptocurrency wallet generator. It handles sensitive financial data. Let's see what Guardrail finds.&quot;</em></p>
+</blockquote>
+<p><strong>When output appears, highlight:</strong></p>
+<ul>
+<li>AI connecting to Groq: <code>[AI] Requesting Groq (LLaMA 3.3-70B) fixes for 4 unique findings...</code></li>
+<li>All 4 AI fixes succeeding: <code>[AI] ✔ Potential XSS sink detected</code></li>
+<li><strong>47 HIGH, 7 MEDIUM, 4 LOW</strong> vulnerabilities</li>
+<li>Score: <strong>F (0/100)</strong></li>
+<li>Result: <strong>✖ FAIL</strong></li>
+</ul>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;58 vulnerabilities across a real crypto wallet project. 47 high-severity XSS sinks — in a financial application, each one could steal user funds. Guardrail instantly flagged them, mapped them to OWASP A03 Injection, and the AI already wrote fixes for every unique vulnerability type. Score: F. This code should NEVER ship.&quot;</em></p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%8E%AC-scene-3--scan-real-project-2-skiix-backend-25-seconds">🎬 SCENE 3 — Scan Real Project #2: Skiix Backend (25 seconds)</h3>
+<p><strong>Visual:</strong> Same terminal, clear screen</p>
+<p><strong>Type live:</strong></p>
+<pre class="hljs"><code><div>npx tsx src/cli.ts scan E:\DATA\Ngoding\skiix-backend --with-ai
+</div></code></pre>
+<p><strong>When output appears, highlight:</strong></p>
+<ul>
+<li>Score: <strong>A+ (100/100)</strong> — full green bar</li>
+<li>Zero findings</li>
+<li>Result: <strong>✔ PASS</strong></li>
+</ul>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;Now let's scan a Go-based social media backend. A+ — 100 out of 100. Zero findings. The policy engine passes the build. This is the before-and-after contrast that makes security tangible. Two real projects. Two very different results. Guardrail tells you exactly where you stand.&quot;</em></p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%8E%AC-scene-4--dashboard--ai-fixes-showcase-60-seconds">🎬 SCENE 4 — Dashboard + AI Fixes Showcase (60 seconds)</h3>
+<p><strong>Visual:</strong> Switch to browser, open <code>http://localhost:4000</code></p>
+<p><strong>Preparation:</strong> Before this scene, run the AIO wallet scan so dashboard shows the interesting data.</p>
+<p><strong>Step 1 — Show Dashboard Overview:</strong>
+Point at:</p>
+<ul>
+<li>Security Score gauge (F — red)</li>
+<li>Severity Distribution donut chart (mostly HIGH)</li>
+<li>OWASP Top 10 bar chart</li>
+<li>Recent findings table</li>
+</ul>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;Every scan generates a premium SaaS-grade dashboard. No mock data — this is rendered dynamically from the real scan we just ran. Security score, OWASP coverage, severity breakdown — all interactive.&quot;</em></p>
+</blockquote>
+<p><strong>Step 2 — Click tabs:</strong></p>
+<ul>
+<li>Click <strong>&quot;Findings&quot;</strong> → Show list of XSS sinks with exact file paths and line numbers</li>
+<li>Click <strong>&quot;OWASP Map&quot;</strong> → Show which OWASP categories were violated</li>
+<li>Click <strong>&quot;AI Fixes&quot;</strong> → Show AI-generated code remediation</li>
+</ul>
+<p><strong>Narration (on AI Fixes tab):</strong></p>
+<blockquote>
+<p><em>&quot;And here's the killer feature. When we scanned with --with-ai, Guardrail sent each vulnerability to Groq's LLaMA 3.3-70B model. The AI returned an explanation, the exact fixed code, and OWASP security references. Developers copy-paste the fix and move on. No other open-source Node.js scanner does this.&quot;</em></p>
+</blockquote>
+<p><strong>Step 3 — Show HTML Report:</strong>
+Open <code>report\guardrail-report.html</code> in a new tab</p>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;We also generate self-contained HTML reports, JSON, SARIF for GitHub Security, and Markdown summaries — 5 formats from every single scan.&quot;</em></p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%8E%AC-scene-5--cicd-integration-25-seconds">🎬 SCENE 5 — CI/CD Integration (25 seconds)</h3>
+<p><strong>Visual:</strong> Switch to VS Code, show <code>.github/workflows/guardrail.yml</code></p>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;Guardrail plugs directly into GitHub Actions. On every push, it scans the code, uploads SARIF to GitHub's Security tab, and blocks unsafe merges automatically. If GROQ_API_KEY is configured, it generates AI fixes too. Zero configuration, zero dependencies.&quot;</em></p>
+</blockquote>
+<hr>
+<h3 id="%F0%9F%8E%AC-scene-6--closing-15-seconds">🎬 SCENE 6 — Closing (15 seconds)</h3>
+<p><strong>Visual:</strong> Terminal or banner slide</p>
+<p><strong>Narration:</strong></p>
+<blockquote>
+<p><em>&quot;We just scanned a crypto wallet extension — 58 vulnerabilities, all with AI-generated fixes. We scanned a social media backend — clean, A+. That's not a demo with fake data — those are real production codebases.</em></p>
+</blockquote>
+<blockquote>
+<p><em>OWASP Guardrail: 30 unit tests passing, 9 vulnerability categories, full OWASP Top 10 mapping, AI auto-remediation powered by LLaMA 3.3, and a premium dashboard — all in a single npm install with zero dependencies.</em></p>
+</blockquote>
+<blockquote>
+<p><em>We didn't build another scanner. We built the one that makes all others obsolete. Thank you.&quot;</em></p>
+</blockquote>
+<hr>
+<h2 id="%F0%9F%8E%AF-pre-recording-checklist">🎯 Pre-Recording Checklist</h2>
+<h3 id="data-preparation-critical--do-this-first">Data Preparation (CRITICAL — Do This First!)</h3>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Set </label><code>GROQ_API_KEY</code> in <code>.env</code> file</li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Run: </label><code>npx tsx src/cli.ts scan E:\DATA\Ngoding\aio-wallet-generator --with-ai</code></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Run: </label><code>npx tsx src/cli.ts scan E:\DATA\Ngoding\skiix-backend --with-ai</code></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">After the AIO wallet scan, run </label><code>npm run dashboard</code> for Scene 4</li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Open </label><code>http://localhost:4000</code> in Chrome to verify dashboard works</li>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Open </label><code>report\guardrail-report.html</code> to verify HTML report renders</li>
+</ul>
+<h3 id="terminal">Terminal</h3>
+<ul>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">Font size: </label><strong>16px minimum</strong></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Theme: </label><strong>Dark</strong> (Windows Terminal)</li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Run </label><code>cls</code> before each command</li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">Close all other terminals</label></li>
+</ul>
+<h3 id="browser">Browser</h3>
+<ul>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">Zoom: </label><strong>110-125%</strong></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">Close all other tabs and bookmark bars</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">Fullscreen mode (F11)</label></li>
+</ul>
+<h3 id="recording">Recording</h3>
+<ul>
+<li><input type="checkbox" id="checkbox13"><label for="checkbox13">Resolution: </label><strong>1920x1080</strong> (Full HD)</li>
+<li><input type="checkbox" id="checkbox14"><label for="checkbox14">Frame rate: </label><strong>30 fps</strong></li>
+<li><input type="checkbox" id="checkbox15"><label for="checkbox15">Microphone: External mic preferred</label></li>
+<li><input type="checkbox" id="checkbox16"><label for="checkbox16">Record each scene separately, edit together later</label></li>
+</ul>
+<hr>
+<h2 id="%F0%9F%93%9D-recording-order">📝 Recording Order</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>What to Record</th>
+<th>Duration</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Terminal: AIO Wallet scan with AI</td>
+<td>35s</td>
+<td>Show AI connecting + FAIL</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Terminal: Skiix Backend scan</td>
+<td>20s</td>
+<td>Show A+ PASS, let it breathe</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Browser: Dashboard all 4 tabs</td>
+<td>50s</td>
+<td>Click through each tab</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Browser: HTML report flash</td>
+<td>10s</td>
+<td>Show self-contained report</td>
+</tr>
+<tr>
+<td>5</td>
+<td>VS Code: guardrail.yml</td>
+<td>10s</td>
+<td>Show CI/CD integration</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Opening + Closing slides</td>
+<td>15s</td>
+<td>Record last, add in editing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total raw footage:</strong> ~2.5 min. Final video: <strong>3 minutes sharp.</strong></p>
+<hr>
+<h2 id="%F0%9F%92%A1-championship-tips">💡 Championship Tips</h2>
+<ol>
+<li><strong>Use REAL projects, not demos</strong> — Judges have seen a million fake demos. Scanning your own production code proves the tool actually works.</li>
+<li><strong>Show the AI connecting live</strong> — The <code>[AI] ✔</code> checkmarks appearing one by one is incredibly satisfying to watch.</li>
+<li><strong>Contrast is everything</strong> — AIO Wallet (F) vs Skiix Backend (A+) tells a powerful visual story.</li>
+<li><strong>Never say &quot;um&quot;, &quot;so basically&quot;, or &quot;as you can see&quot;</strong> — These destroy credibility instantly.</li>
+<li><strong>Pause after impact moments</strong> — After the F score appears, let it breathe 1-2 seconds.</li>
+<li><strong>End with a mic drop</strong> — <em>&quot;We built the one that makes all others obsolete&quot;</em> should be your last sentence.</li>
+</ol>
+<hr>
+<p><em>&quot;We didn't build another scanner. We built the one that makes all others obsolete.&quot;</em></p>
+
+</body>
+</html>

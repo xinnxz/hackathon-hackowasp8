@@ -2,7 +2,7 @@
 
 > **Status:** ❌ FAIL | **Security Score:** **F** (0/100) — Critical — Immediate action required
 > **Scan Target:** `E:\DATA\Ngoding\aio-wallet-generator`
-> **Generated:** 2026-04-19T20:41:28.719Z
+> **Generated:** 2026-04-19T21:21:38.801Z
 > **Policy:** Fail on [high, critical]
 
 ## Summary
@@ -36,18 +36,16 @@
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -61,18 +59,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -86,18 +82,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -111,18 +105,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -136,18 +128,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -161,18 +151,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -186,18 +174,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -211,18 +197,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -236,18 +220,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -261,18 +243,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -286,18 +266,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -311,18 +289,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -336,18 +312,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -361,18 +335,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -386,18 +358,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -411,18 +381,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -436,18 +404,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -461,17 +427,17 @@ element.textContent = safe;
 
 **Recommendation:** Replace the hardcoded value with an environment variable and rotate the credential.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Replace the hardcoded value with an environment variable and rotate the credential.
+Hardcoding high-entropy credential-like values poses a significant security risk as it can lead to unauthorized access if the code is exposed. An attacker can exploit this vulnerability to gain access to sensitive resources, compromising the security of the application and its data.
 
 ```
-const token = process.env.API_TOKEN;
-if (!token) throw new Error('Missing API_TOKEN env var');
+import os
+secret_key = os.environ.get('SECRET_KEY')
 ```
 
 **References:**
-- https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+- https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
 
 ---
 
@@ -485,17 +451,17 @@ if (!token) throw new Error('Missing API_TOKEN env var');
 
 **Recommendation:** Replace the hardcoded value with an environment variable and rotate the credential.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Replace the hardcoded value with an environment variable and rotate the credential.
+Hardcoding high-entropy credential-like values poses a significant security risk as it can lead to unauthorized access if the code is exposed. An attacker can exploit this vulnerability to gain access to sensitive resources, compromising the security of the application and its data.
 
 ```
-const token = process.env.API_TOKEN;
-if (!token) throw new Error('Missing API_TOKEN env var');
+import os
+secret_key = os.environ.get('SECRET_KEY')
 ```
 
 **References:**
-- https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
+- https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html
 
 ---
 
@@ -509,18 +475,16 @@ if (!token) throw new Error('Missing API_TOKEN env var');
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -534,18 +498,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -559,18 +521,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -584,18 +544,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -609,18 +567,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -634,18 +590,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -659,18 +613,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -684,18 +636,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -709,18 +659,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -734,18 +682,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -759,18 +705,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -784,18 +728,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -809,18 +751,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -834,18 +774,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -859,18 +797,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -884,18 +820,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -909,18 +843,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -934,18 +866,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -959,18 +889,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -984,18 +912,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1009,18 +935,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1034,18 +958,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1059,18 +981,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1084,18 +1004,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1109,18 +1027,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1134,18 +1050,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1159,18 +1073,16 @@ element.textContent = safe;
 
 **Recommendation:** Sanitize untrusted content or use safer rendering APIs.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Sanitize untrusted content or use safer rendering APIs.
+This is a high-severity vulnerability because it allows an attacker to inject malicious scripts into the application, potentially leading to unauthorized access, data theft, or other malicious activities. When user-inputted content is not properly sanitized, it can be used to inject HTML or JavaScript code, enabling cross-site scripting (XSS) attacks.
 
 ```
-// Use DOMPurify or framework escaping instead of innerHTML
-const safe = DOMPurify.sanitize(userInput);
-element.textContent = safe;
+const express = require('express'); const app = express(); app.use(express.urlencoded({ extended: true })); app.get('/', (req, res) => { const userInput = req.query.userInput; const sanitizedInput = escapeHtml(userInput); res.send(sanitizedInput); }); function escapeHtml(unsafe) { return unsafe.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;'); }
 ```
 
 **References:**
-- https://owasp.org/Top10/A03_2021-Injection/
+- https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -1184,16 +1096,16 @@ element.textContent = safe;
 
 **Recommendation:** Review xlsx manually and replace it with a maintained alternative if no safe upgrade exists.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Review xlsx manually and replace it with a maintained alternative if no safe upgrade exists.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1207,16 +1119,16 @@ Review xlsx manually and replace it with a maintained alternative if no safe upg
 
 **Recommendation:** Use HTTPS endpoints and enforce TLS for outbound calls.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Use HTTPS endpoints and enforce TLS for outbound calls.
+Hardcoding non-TLS URLs can lead to data being transmitted over plaintext, making it vulnerable to eavesdropping and tampering. This is particularly dangerous for sensitive data, as it can be intercepted and exploited by malicious actors. Using HTTPS endpoints and enforcing TLS for outbound calls ensures that data is encrypted and protected during transmission.
 
 ```
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN?.split(',') ?? [] }));
+https://example.com/api/endpoint
 ```
 
 **References:**
-- https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
+- https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html
 
 ---
 
@@ -1230,16 +1142,16 @@ app.use(cors({ origin: process.env.ALLOWED_ORIGIN?.split(',') ?? [] }));
 
 **Recommendation:** Use HTTPS endpoints and enforce TLS for outbound calls.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Use HTTPS endpoints and enforce TLS for outbound calls.
+Hardcoding non-TLS URLs can lead to data being transmitted over plaintext, making it vulnerable to eavesdropping and tampering. This is particularly dangerous for sensitive data, as it can be intercepted and exploited by malicious actors. Using HTTPS endpoints and enforcing TLS for outbound calls ensures that data is encrypted and protected during transmission.
 
 ```
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN?.split(',') ?? [] }));
+https://example.com/api/endpoint
 ```
 
 **References:**
-- https://owasp.org/Top10/A05_2021-Security_Misconfiguration/
+- https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html
 
 ---
 
@@ -1253,16 +1165,16 @@ app.use(cors({ origin: process.env.ALLOWED_ORIGIN?.split(',') ?? [] }));
 
 **Recommendation:** Upgrade axios to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade axios to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1276,16 +1188,16 @@ Upgrade axios to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade esbuild to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade esbuild to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1299,16 +1211,16 @@ Upgrade esbuild to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade follow-redirects to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade follow-redirects to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1322,16 +1234,16 @@ Upgrade follow-redirects to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade tronweb to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade tronweb to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1345,16 +1257,16 @@ Upgrade tronweb to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade vite to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade vite to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1368,16 +1280,16 @@ Upgrade vite to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade @cosmjs/amino to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade @cosmjs/amino to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1391,16 +1303,16 @@ Upgrade @cosmjs/amino to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade @cosmjs/crypto to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade @cosmjs/crypto to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1414,16 +1326,16 @@ Upgrade @cosmjs/crypto to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade @cosmjs/proto-signing to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade @cosmjs/proto-signing to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
@@ -1437,16 +1349,16 @@ Upgrade @cosmjs/proto-signing to the patched version recommended by npm audit.
 
 **Recommendation:** Upgrade elliptic to the patched version recommended by npm audit.
 
-**AI Fix Suggestion** _(📋 Static)_
+**AI Fix Suggestion** _(🤖 Groq (LLaMA))_
 
-Upgrade elliptic to the patched version recommended by npm audit.
+Using outdated or vulnerable components like xlsx can expose an application to known security vulnerabilities, potentially allowing attackers to exploit these weaknesses and gain unauthorized access or control. This can lead to data breaches, malware infections, or other malicious activities.
 
 ```
-// Review the finding, apply the recommendation, and re-run the scanner.
+npm install --save xlsx@latest || yarn add xlsx@latest
 ```
 
 **References:**
-- https://owasp.org/Top10/A06_2021-Vulnerable_and_Outdated_Components/
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Check_Cheat_Sheet.html
 
 ---
 
