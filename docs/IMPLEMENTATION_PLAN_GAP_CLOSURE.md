@@ -230,3 +230,8 @@ Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke code
 - Contoh repo root: `.guardrailrc.json` untuk CI `scan .` yang mengabaikan `demo/`, `docs/`, `tests/`, dll.
 
 Item lanjutan opsional: SARIF rule id stabil, parent-directory config discovery, dan perluasan glob ignore.
+
+### 10.1 Update lanjutan (2026-04-19)
+
+- **SARIF rule id stabil:** `src/util/stableRuleId.ts` — hash SHA-256 dari `type` + `title`; `rules` di SARIF deduplikasi per id (tidak lagi `type-index`).
+- **Parent config:** `loadConfig()` menggabungkan berkas dari ancestor ke target (lihat log `Merged N file(s): …`).

@@ -87,7 +87,7 @@ Guardrail intelligently groups similar vulnerabilities (e.g., duplicate dependen
 - Official references directly to the OWASP Cheat Sheet Series.
 
 ### ⚙️ `.guardrailrc.json` Configuration
-The scanner reads **`<scan-path>/.guardrailrc.json` only** (it does not walk parent folders). Use it to toggle rules, ignore paths, filter noisy findings, and set policy.
+The scanner loads **every** `.guardrailrc.json` from the **filesystem root down to `<scan-path>`** and merges them: **deeper folders override** scalar fields (`policy`, `rules`, `ai`, `report`); `ignore.paths` and `ignore.findings` are **unioned** (deduped). Use this to share org-wide defaults at the repo root and project-specific overrides in subfolders.
 
 - **`policy.failOn`:** severities that fail the build (unless overridden by CLI `--fail-on=`).
 - **`policy.scoreThreshold`:** when **greater than 0**, the run **also fails** if the security score falls **below** this value (combined with severity policy).
