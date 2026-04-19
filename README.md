@@ -119,6 +119,8 @@ The scanner reads **`<scan-path>/.guardrailrc.json` only** (it does not walk par
 
 **CLI vs config:** if you pass `--fail-on=…`, it **overrides** `policy.failOn` from the file for that run.
 
+**Self-scan of this repo:** the root `.guardrailrc.json` disables a few rules (`xss`, `weakCrypto`) and ignores `src/dashboard/**` because the scanner, reporter templates, and dashboard embed string literals that otherwise trigger pattern-only rules. When you scan **application** codebases, keep those rules **enabled**.
+
 ### 🤖 CI/CD Integration (GitHub PR Bot)
 Guardrail is built for enterprise pipelines. The included GitHub Actions workflow automatically:
 1. Runs the scan on every Pull Request.
