@@ -71,7 +71,13 @@ export async function loadConfig(targetPath: string): Promise<GuardrailConfig> {
     const raw = await fs.readFile(configPath, "utf8");
     const partial = JSON.parse(raw) as Partial<GuardrailConfig>;
     const merged: GuardrailConfig = {
-      policy: { ...defaultConfig.policy, ...partial.policy },
+      policy: {
+        ...defaultConfig.policy,
+        ...partial.policy,
+        scoreThreshold: Number(
+          partial.policy?.scoreThreshold ?? defaultConfig.policy.scoreThreshold,
+        ),
+      },
       rules: { ...defaultConfig.rules, ...partial.rules },
       ignore: { ...defaultConfig.ignore, ...partial.ignore },
       ai: { ...defaultConfig.ai, ...partial.ai },

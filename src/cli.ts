@@ -2,6 +2,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { generateFixSuggestions } from "./ai/suggestions";
 import { loadConfig } from "./config";
+import { applyFindingIgnores, evaluatePass, mergeFailOn } from "./policy";
 import { buildHtmlReport } from "./reporter/html";
 import { writeJsonReport } from "./reporter/json";
 import { buildMarkdownReport } from "./reporter/markdown";
@@ -9,7 +10,7 @@ import { buildPrComment } from "./reporter/pr-comment";
 import { buildSarif } from "./reporter/sarif";
 import { scanProject } from "./scanner";
 import { calculateSecurityScore, formatScoreBar } from "./scoring";
-import { defaultFailOn, type GuardrailReport, type Severity } from "./types";
+import type { GuardrailReport, Severity } from "./types";
 
 async function main(): Promise<void> {
   const [, , command = "scan", scanTarget = ".", ...rest] = process.argv;
@@ -28,16 +29,18 @@ async function main(): Promise<void> {
 
   printBanner();
 
-  const failOn = parseFailOn(rest);
+  const { explicit: failOnExplicit, values: cliFailOn } = parseFailOnFromArgs(rest);
   const withAi = rest.includes("--with-ai");
   const apiKey = parseApiKey(rest);
   const absoluteTarget = path.resolve(scanTarget);
 
   logStep(1, withAi ? 5 : 4, "Loading config");
   const config = await loadConfig(absoluteTarget);
+  const mergedFailOn = mergeFailOn(failOnExplicit, cliFailOn, config.policy.failOn);
 
   logStep(2, withAi ? 5 : 4, "Scanning files and dependencies");
-  let findings = await scanProject(absoluteTarget);
+  let findings = await scanProject(absoluteTarget, config);
+  findings = applyFindingIgnores(findings, config.ignore.findings);
 
   if (withAi) {
     logStep(3, 5, "Generating AI fix suggestions (Groq / LLaMA 3.3)");
@@ -48,14 +51,20 @@ async function main(): Promise<void> {
   const securityScore = calculateSecurityScore(findings);
   const summary = summarizeFindings(findings);
 
+  const evaluation = evaluatePass(findings, mergedFailOn, securityScore.score, config.policy.scoreThreshold);
+
   const report: GuardrailReport = {
     scannedPath: absoluteTarget,
     generatedAt: new Date().toISOString(),
-    policy: { failOn },
+    policy: {
+      failOn: mergedFailOn,
+      scoreThreshold: config.policy.scoreThreshold,
+      notes: evaluation.notes,
+    },
     findings,
     summary,
     securityScore,
-    passed: !findings.some((f) => failOn.includes(f.severity)),
+    passed: evaluation.passed,
   };
 
   const outputDir = path.resolve(config.report.outputDir);
@@ -83,18 +92,28 @@ async function main(): Promise<void> {
 function printUsage(): void {
   console.log("Usage:");
   console.log("  npm run guardrail -- scan <path> [--fail-on=medium,high,critical] [--with-ai] [--api-key=<key>]");
+  console.log("  (fail-on: CLI overrides .guardrailrc.json when --fail-on= is present)");
   console.log("  npm run guardrail -- dashboard");
 }
 
-function parseFailOn(args: string[]): Severity[] {
+function parseFailOnFromArgs(args: string[]): { explicit: boolean; values?: Severity[] } {
   const flag = args.find((a) => a.startsWith("--fail-on="));
-  if (!flag) return defaultFailOn;
+  if (!flag) {
+    return { explicit: false };
+  }
+  const body = flag.slice("--fail-on=".length);
+  if (!body.trim()) {
+    return { explicit: false };
+  }
   const allowed: Severity[] = ["low", "medium", "high", "critical"];
-  return flag
-    .replace("--fail-on=", "")
+  const values = body
     .split(",")
     .map((v) => v.trim().toLowerCase() as Severity)
     .filter((v): v is Severity => allowed.includes(v));
+  if (values.length === 0) {
+    return { explicit: false };
+  }
+  return { explicit: true, values };
 }
 
 function parseApiKey(args: string[]): string | undefined {
@@ -137,6 +156,12 @@ function printSummary(
 
   console.log(`\nTarget:  ${report.scannedPath}`);
   console.log(`Policy:  fail-on [${report.policy.failOn.join(", ")}]`);
+  if (report.policy.scoreThreshold > 0) {
+    console.log(`         score threshold: ${report.policy.scoreThreshold} (FAIL if score below)`);
+  }
+  if (report.policy.notes?.length) {
+    console.log(`Notes:   ${report.policy.notes.join(" | ")}`);
+  }
   console.log(`Reports: ${paths.htmlPath}`);
   console.log(`         ${paths.jsonPath}`);
   console.log(`         ${paths.sarifPath}`);

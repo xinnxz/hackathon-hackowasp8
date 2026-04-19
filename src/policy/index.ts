@@ -12,7 +12,7 @@ export function coerceSeverities(values: string[]): Severity[] {
  * CLI `--fail-on=` overrides config when present.
  */
 export function mergeFailOn(cliExplicit: boolean, cliFailOn: Severity[] | undefined, configFailOn: string[]): Severity[] {
-  if (cliExplicit && cliFailOn !== undefined) {
+  if (cliExplicit && cliFailOn !== undefined && cliFailOn.length > 0) {
     return cliFailOn;
   }
   const fromConfig = coerceSeverities(configFailOn);

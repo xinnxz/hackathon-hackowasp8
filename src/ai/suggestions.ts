@@ -105,7 +105,7 @@ async function callGroq(finding: Finding, apiKey: string): Promise<AiSuggestion>
     explanation: safeString(parsed["explanation"], finding.recommendation),
     fixedCode: safeString(parsed["fixedCode"], "// See recommendation above."),
     references: normalizeReferences(parsed["references"], finding),
-    source: "gemini", // keep "gemini" label for display consistency — judges don't need to know internals
+    source: "groq",
   };
 }
 

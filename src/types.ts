@@ -34,7 +34,7 @@ export type AiSuggestion = {
   explanation: string;
   fixedCode: string;
   references: string[];
-  source: "gemini" | "fallback";
+  source: "groq" | "fallback";
 };
 
 export type Finding = {
@@ -63,6 +63,8 @@ export type GuardrailReport = {
   generatedAt: string;
   policy: {
     failOn: Severity[];
+    scoreThreshold: number;
+    notes?: string[];
   };
   findings: Finding[];
   summary: Record<Severity, number>;
