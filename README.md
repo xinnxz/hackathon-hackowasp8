@@ -76,7 +76,7 @@ npm run scan:demo:ai
 
 ## Quality & CI
 
-- **Unit tests:** run `npm test` — **27** tests covering config merge, policy, scanner rules, SARIF rule IDs, Git-bounded config discovery, integration scans, and JSON report shape.
+- **Unit tests:** run `npm test` — **30** tests covering config merge, policy, scanner rules, SARIF rule IDs, Git-bounded config discovery, integration scans (including **single-file** scan targets), and JSON report shape.
 - **Build:** `npm run build` (TypeScript → `dist/`).
 - **GitHub Actions:** [.github/workflows/guardrail.yml](.github/workflows/guardrail.yml) runs install, scan, and security upload steps on pushes/PRs to `main`/`master`.
 

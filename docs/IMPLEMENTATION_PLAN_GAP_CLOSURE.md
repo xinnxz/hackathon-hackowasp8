@@ -212,7 +212,7 @@ Rencana ini mengutamakan **integritas perilaku (behavioral integrity)** di atas 
 - [x] `npm test` + `npm run build` lulus.
 - [x] README tidak mengklaim fitur yang tidak ada di kode (self-audit berkala disarankan).
 
-**Fase F (selesai):** `tests/integration.test.ts` — integrasi `loadConfig` + `scanProject` di repo Git terisolasi (temp); `tests/policy.test.ts` — matrix `evaluatePass`; `tests/reportShape.test.ts` — bentuk JSON report stabil; `tests/fixtures/README.md` menjelaskan pola fixture. **27** tes (`npm test`).
+**Fase F (selesai):** `tests/integration.test.ts` — integrasi `loadConfig` + `scanProject` di repo Git terisolasi (temp), termasuk **satu file** sebagai target; `tests/policy.test.ts` — matrix `evaluatePass`; `tests/reportShape.test.ts` — bentuk JSON report stabil; `tests/fixtures/README.md` menjelaskan pola fixture. **30** tes (`npm test`).
 
 ---
 
@@ -233,10 +233,10 @@ Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke code
 - `mergeFailOn` + `evaluatePass` (severity + `scoreThreshold`) mengatur `report.passed` dan `policy.notes`.
 - Contoh repo root: `.guardrailrc.json` untuk CI `scan .` yang mengabaikan `demo/`, `docs/`, `tests/`, dll.
 
-Item lanjutan opsional: perluasan glob `ignore.paths`, tes `loadConfig` saat target adalah file (bukan folder), polish laporan.
+Item lanjutan opsional: perluasan glob `ignore.paths`, polish laporan. **Target scan berupa file:** didukung (`listConfigDirectories` / `loadConfig` memakai folder induk file; `scanProject` memindai satu file).
 
 ### 10.1 Update lanjutan (2026-04-19)
 
 - **SARIF rule id stabil:** `src/util/stableRuleId.ts` — hash SHA-256 dari `type` + `title`; `rules` di SARIF deduplikasi per id (tidak lagi `type-index`).
 - **Parent config (Git-bounded):** `src/config/discovery.ts` — `listConfigDirectories` hanya dari **root Git** ke target; tanpa `.git`, hanya folder target. `loadConfig()` menggabungkan berkas dalam urutan itu (lihat log `Merged N file(s): …`).
-- **Fase F:** integrasi + matrix policy + bentuk JSON report — lihat `tests/integration.test.ts`, `tests/reportShape.test.ts`, dan pembaruan `tests/policy.test.ts`.
+- **Fase F:** integrasi + matrix policy + bentuk JSON report + target file — lihat `tests/integration.test.ts`, `tests/discovery.test.ts`, `tests/reportShape.test.ts`, `tests/policy.test.ts`.

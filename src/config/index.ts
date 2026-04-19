@@ -5,7 +5,7 @@ import { mergeGuardrailConfig, type GuardrailConfig } from "./merge";
 
 export type { GuardrailConfig };
 export { mergeGuardrailConfig };
-export { findGitRoot, listConfigDirectories } from "./discovery";
+export { configAnchorDirectory, findGitRoot, listConfigDirectories } from "./discovery";
 
 export const defaultConfig: GuardrailConfig = {
   policy: {
@@ -41,7 +41,8 @@ export const defaultConfig: GuardrailConfig = {
 
 /**
  * Merges `.guardrailrc.json` from the Git repo root down to `targetPath` (stops at `.git`).
- * If no Git root exists, only `targetPath` is used for config lookup.
+ * If `targetPath` is a **file**, config is merged only for directories from the repo root down to that file’s parent folder.
+ * If no Git root exists, only the scan directory (or the file’s parent) is used for config lookup.
  * Deeper directories override scalars; `ignore.paths` / `ignore.findings` are unioned (deduped).
  */
 export async function loadConfig(targetPath: string): Promise<GuardrailConfig> {

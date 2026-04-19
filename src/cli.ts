@@ -96,6 +96,7 @@ async function main(): Promise<void> {
 function printUsage(): void {
   console.log("Usage:");
   console.log("  npm run guardrail -- scan <path> [--fail-on=medium,high,critical] [--with-ai] [--api-key=<key>] [--output-dir=<dir>]");
+  console.log("  (<path> may be a directory or a single source file, e.g. src/app.ts)");
   console.log("  (fail-on: CLI overrides .guardrailrc.json when --fail-on= is present)");
   console.log("  (output-dir: CLI overrides report.outputDir for this run; path is resolved from cwd)");
   console.log("  npm run guardrail -- dashboard");

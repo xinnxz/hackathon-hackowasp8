@@ -57,6 +57,42 @@ test("integration: loadConfig + scanProject respects ignore.paths (isolated git 
   assert.ok(findings.some((f) => f.type === "injection"), "expected injection finding");
 });
 
+test("integration: scanProject on a single file path (not directory)", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "gr-onefile-"));
+  mkdirSync(path.join(root, ".git"));
+  mkdirSync(path.join(root, "src"), { recursive: true });
+  writeFileSync(
+    path.join(root, ".guardrailrc.json"),
+    JSON.stringify({
+      policy: { failOn: [], scoreThreshold: 0 },
+      rules: {
+        secrets: false,
+        injection: true,
+        xss: false,
+        cors: false,
+        eval: false,
+        ssrf: false,
+        weakCrypto: false,
+        pathTraversal: false,
+        insecureHttp: false,
+        authMiddleware: false,
+        dependencies: false,
+      },
+      ignore: { paths: [], findings: [] },
+      report: { formats: ["json"], outputDir: "./report" },
+      ai: { enabled: false, model: "" },
+    }),
+  );
+  const jsPath = path.join(root, "src", "one.js");
+  writeFileSync(jsPath, "const q = 'SELECT * FROM t WHERE id = ' + x;\n");
+
+  const config = await loadConfig(jsPath);
+  const findings = await scanProject(jsPath, config);
+
+  assert.ok(findings.some((f) => f.type === "injection"));
+  assert.ok(findings.every((f) => f.file === "one.js" || posix(f.file) === "one.js"));
+});
+
 test("integration: single active rule — only injection when others disabled", async () => {
   const root = mkdtempSync(path.join(tmpdir(), "gr-rule-"));
   mkdirSync(path.join(root, ".git"));

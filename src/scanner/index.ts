@@ -13,12 +13,45 @@ const supportedExtensions = new Set([".js", ".ts", ".tsx", ".jsx", ".json", ".en
 const skipDirectories = new Set(["node_modules", ".git", "dist", "coverage"]);
 
 export async function scanProject(targetPath: string, config: GuardrailConfig): Promise<Finding[]> {
-  const fileFindings = await scanFiles(targetPath, config);
-  const dependencyFindings = await scanDependencies(targetPath, config.rules.dependencies);
+  const resolved = path.resolve(targetPath);
+  let st: Awaited<ReturnType<typeof fs.stat>> | null = null;
+  try {
+    st = await fs.stat(resolved);
+  } catch {
+    return [];
+  }
+
+  const depRoot = st.isFile() ? path.dirname(resolved) : resolved;
+  const fileFindings = st.isFile()
+    ? await scanSingleFile(resolved, config)
+    : await scanFiles(resolved, config);
+  const dependencyFindings = await scanDependencies(depRoot, config.rules.dependencies);
 
   return [...fileFindings, ...dependencyFindings]
     .map((finding) => ({ ...finding, owaspCategory: mapFindingToOwasp(finding) }))
     .sort((left, right) => severityRank[right.severity] - severityRank[left.severity]);
+}
+
+async function scanSingleFile(filePath: string, config: GuardrailConfig): Promise<Finding[]> {
+  const scanRoot = path.dirname(filePath);
+  const baseName = path.basename(filePath);
+  const ext = path.extname(baseName);
+  if (!supportedExtensions.has(ext) && baseName !== ".env") {
+    return [];
+  }
+  const relativePath = normalizeScanPath(path.relative(scanRoot, filePath)) || baseName;
+  if (config.ignore?.paths.some((p) => pathMatchesIgnore(relativePath, p))) {
+    return [];
+  }
+
+  const findings: Finding[] = [];
+  const content = await fs.readFile(filePath, "utf8");
+  const lines = content.split(/\r?\n/);
+  lines.forEach((line, index) => {
+    findings.push(...scanSecretLine(relativePath, index + 1, line, config.rules));
+    findings.push(...scanRuleLine(relativePath, index + 1, line, config.rules));
+  });
+  return findings;
 }
 
 async function scanFiles(targetPath: string, config: GuardrailConfig): Promise<Finding[]> {

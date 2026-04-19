@@ -34,6 +34,28 @@ test("without .git, listConfigDirectories is only target", async () => {
   assert.deepEqual(dirs, [only]);
 });
 
+test("listConfigDirectories with file target uses parent chain to git root", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "gr-filecfg-"));
+  mkdirSync(path.join(root, "apps"), { recursive: true });
+  const file = path.join(root, "apps", "svc.js");
+  writeFileSync(file, "// noop\n");
+  mkdirSync(path.join(root, ".git"));
+
+  const dirs = await listConfigDirectories(file);
+  assert.deepEqual(dirs, [root, path.join(root, "apps")]);
+});
+
+test("without .git, file target resolves to parent directory only", async () => {
+  const root = mkdtempSync(path.join(tmpdir(), "gr-fileonly-"));
+  const sub = path.join(root, "pkg");
+  mkdirSync(sub, { recursive: true });
+  const file = path.join(sub, "a.ts");
+  writeFileSync(file, "export {}\n");
+
+  const dirs = await listConfigDirectories(file);
+  assert.deepEqual(dirs, [sub]);
+});
+
 test("loadConfig merges only within git tree", async () => {
   const root = mkdtempSync(path.join(tmpdir(), "gr-load-"));
   const leaf = path.join(root, "leaf");
