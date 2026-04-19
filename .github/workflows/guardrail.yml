@@ -1,12 +1,19 @@
-name: OWASP Guardrail
+name: OWASP Guardrail Security Scan
 
 on:
-  push:
   pull_request:
+    branches: [ "main", "master" ]
+  push:
+    branches: [ "main", "master" ]
 
 jobs:
-  guardrail:
+  security-scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      security-events: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -14,27 +21,34 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
-      - name: Install root dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Install demo dependencies
-        run: npm install
-        working-directory: demo/vulnerable-app
+      - name: Run OWASP Guardrail Scanner
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: npx tsx src/cli.ts scan . --with-ai
 
-      - name: Run Guardrail scan
-        run: npm run guardrail -- scan demo/vulnerable-app --fail-on=high,critical
-
-      - name: Upload SARIF report
-        if: always()
+      - name: Upload SARIF report to GitHub Security
         uses: github/codeql-action/upload-sarif@v3
+        if: always()
         with:
           sarif_file: report/guardrail-report.sarif
 
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Comment PR with Security Score
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request' && always()
         with:
-          name: owasp-guardrail-report
-          path: report/guardrail-report.html
+          path: report/pr-comment.md
+
+      - name: Upload HTML & JSON Reports as Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: guardrail-security-reports
+          path: |
+            report/guardrail-report.html
+            report/guardrail-report.json
+            report/guardrail-report.md
