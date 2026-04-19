@@ -2,7 +2,7 @@
 
 > **Status:** ❌ FAIL | **Security Score:** **F** (0/100) — Critical — Immediate action required
 > **Scan Target:** `E:\DATA\Ngoding\hackowasp8\demo\vulnerable-app`
-> **Generated:** 2026-04-19T00:55:06.807Z
+> **Generated:** 2026-04-19T11:09:43.318Z
 > **Policy:** Fail on [high, critical]
 
 ## Summary
