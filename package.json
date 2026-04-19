@@ -11,7 +11,9 @@
     "scan:demo:ai": "tsx src/cli.ts scan demo/vulnerable-app --with-ai",
     "scan:fixed:ai": "tsx src/cli.ts scan demo/fixed-app --with-ai",
     "dashboard": "tsx src/cli.ts dashboard",
-    "test": "tsx --test tests/**/*.test.ts"
+    "test": "tsx --test tests/**/*.test.ts",
+    "demo:judge": "npm run build && node scripts/judge-demo.mjs",
+    "demo:judge:ai": "npm run build && node scripts/judge-demo.mjs --with-ai"
   },
   "keywords": [],
   "author": "",
