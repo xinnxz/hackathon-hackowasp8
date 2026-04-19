@@ -1,6 +1,37 @@
 import type { GuardrailReport, Severity } from "../types";
+import { stableRuleId } from "../util/stableRuleId";
+
+type SarifRule = {
+  id: string;
+  name: string;
+  shortDescription: { text: string };
+  fullDescription: { text: string };
+  help: { text: string };
+  properties: { tags: string[] };
+};
 
 export function buildSarif(report: GuardrailReport): object {
+  const ruleMap = new Map<string, SarifRule>();
+
+  for (const finding of report.findings) {
+    const id = stableRuleId(finding);
+    if (ruleMap.has(id)) {
+      continue;
+    }
+    ruleMap.set(id, {
+      id,
+      name: finding.title,
+      shortDescription: { text: finding.title },
+      fullDescription: { text: finding.description },
+      help: { text: finding.recommendation },
+      properties: {
+        tags: ["owasp", finding.type, finding.severity, finding.owaspCategory?.id ?? "unmapped"],
+      },
+    });
+  }
+
+  const rules = [...ruleMap.values()];
+
   return {
     version: "2.1.0",
     $schema: "https://json.schemastore.org/sarif-2.1.0.json",
@@ -9,20 +40,11 @@ export function buildSarif(report: GuardrailReport): object {
         tool: {
           driver: {
             name: "OWASP Guardrail",
-            rules: report.findings.map((finding, index) => ({
-              id: `${finding.type}-${index + 1}`,
-              name: finding.title,
-              shortDescription: { text: finding.title },
-              fullDescription: { text: finding.description },
-              help: { text: finding.recommendation },
-              properties: {
-                tags: ["owasp", finding.type, finding.severity, finding.owaspCategory?.id ?? "unmapped"],
-              },
-            })),
+            rules,
           },
         },
-        results: report.findings.map((finding, index) => ({
-          ruleId: `${finding.type}-${index + 1}`,
+        results: report.findings.map((finding) => ({
+          ruleId: stableRuleId(finding),
           level: sarifLevel(finding.severity),
           message: { text: `${finding.title}: ${finding.description}` },
           locations: [
