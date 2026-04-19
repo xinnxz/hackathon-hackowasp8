@@ -1,98 +1,115 @@
 <div align="center">
   <h1>⛨ OWASP Guardrail V2 Enterprise</h1>
-  <p><strong>Next-Gen DevSecOps Scanner with AI Remediation & Interactive Dashboard</strong></p>
+  <p><strong>DevSecOps scanner for Node/JS — OWASP mapping, scoring, SARIF, and optional AI fixes</strong></p>
 
   [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-  [![Security Score](https://img.shields.io/badge/Security_Score-A%2B-4ade80.svg)](#)
-  [![HackOWASP 8.0](https://img.shields.io/badge/HackOWASP-8.0-ff4d6d.svg)](#)
-  [![AI Powered](https://img.shields.io/badge/AI-Groq%20LLaMA_3.3-a78bfa.svg)](#)
+  [![HackOWASP 8.0](https://img.shields.io/badge/HackOWASP-8.0-ff4d6d.svg)](https://dorahacks.io/)
+  [![CI: Guardrail](https://github.com/xinnxz/hackowasp8.0/actions/workflows/guardrail.yml/badge.svg)](https://github.com/xinnxz/hackowasp8.0/actions/workflows/guardrail.yml)
+  [![AI Powered](https://img.shields.io/badge/AI-Groq%20LLaMA_3.3-a78bfa.svg)](https://console.groq.com/)
 
-  <i>Built for Cyber Security Track — HackOWASP 8.0</i>
+  <i>Cyber Security Track — HackOWASP 8.0</i>
 </div>
 
 ---
 
-## 🚀 The Missing Link in DevSecOps
+## For judges — 2-minute demo
 
-Traditional SAST tools generate noisy, static reports that developers ignore. **OWASP Guardrail** revolutionizes the security workflow by combining robust regex pattern matching with **ultra-fast AI remediation (powered by Groq & LLaMA 3.3)** and an **interactive, enterprise-grade web dashboard**.
+**One command** after clone + `npm install`:
 
-We don't just tell you that your code is vulnerable. We tell you **why**, we give you the **exact code to fix it**, and we map it directly to the **OWASP Top 10**.
+```bash
+npm run demo:judge
+```
 
-### 🔥 Why Guardrail Wins
-1. **Interactive SPA Dashboard:** A premium `localhost` dashboard with animated charts, real-time filtering, and radar graphs for OWASP Top 10 coverage.
-2. **AI Fix Suggestions in ~0.5s:** Integrated with Groq (LLaMA 3.3-70B) for lightning-fast, highly accurate code remediation—free from API rate-limiting issues.
-3. **Security Scoring System (A+ to F):** Executive-friendly grading system that penalizes critical issues heavily and rewards clean code.
-4. **Zero-Friction CI/CD:** Fully automated GitHub Actions workflow that uploads SARIF to GitHub Security and posts an elegant PR comment with your security score.
-5. **Project-Level Configuration:** Highly customizable via `.guardrailrc.json`.
+Then open **`report-demo-vulnerable/guardrail-report.html`** (bad app, expect FAIL) and **`report-demo-fixed/guardrail-report.html`** (fixed app, expect PASS / A+). Step-by-step script: **[docs/JUDGE_DEMO.md](docs/JUDGE_DEMO.md)**.
+
+Optional wow factor: set `GROQ_API_KEY`, run `npm run demo:judge:ai`, then `npm run dashboard` after a scan.
 
 ---
 
-## 🛠️ Quick Start
+## The problem
 
-### 1. Installation
+Security findings are often either **noisy** (developers tune out) or **heavy** (full enterprise SAST is hard to adopt in small teams and hackathon timelines). Teams still need **OWASP-relevant signal**, **clear pass/fail policy**, and **artifacts** (SARIF, HTML) that fit real pipelines.
+
+---
+
+## What OWASP Guardrail does
+
+- **Scans** JavaScript/TypeScript-style projects with pattern-based rules (secrets, injection, XSS, weak crypto, dependencies via `npm audit`, and more), maps to **OWASP Top 10**, and produces a **letter grade (A+–F)**.
+- **Reports** JSON, HTML, SARIF, Markdown, and a **PR-style Markdown comment** — suitable for GitHub Actions and review workflows.
+- **Optional AI remediation** via **Groq (LLaMA 3.3)** for short explanations and fix snippets, plus a **local dashboard** to explore results.
+
+---
+
+## Who this is for (and what we are not)
+
+**Built for:** Node/npm codebases, fast feedback in CI, hackathon-scale scope, and demos where **clarity beats raw rule count**.
+
+**Not a drop-in replacement for** deep semantic analyzers (e.g. full AST taint engines). Guardrail trades some precision for **speed, zero JVM footprint, and a single-tool story** aligned with OWASP categories and developer-friendly output. That is an intentional scope choice for this project.
+
+---
+
+## 30-second quickstart
 
 ```bash
-# Clone the repository
 git clone https://github.com/xinnxz/hackowasp8.0.git owasp-guardrail
 cd owasp-guardrail
-
-# Install dependencies and build
 npm install
 npm run build
+npm run demo:judge
 ```
 
-### 2. Configure AI (Optional but Highly Recommended)
-Get a free, high-limit API key from [Groq Console](https://console.groq.com).
+Groq (optional):
 
-```bash
-# Set your API Key (Windows PowerShell)
-$env:GROQ_API_KEY="gsk_your_api_key_here"
-
-# (Linux/Mac)
-export GROQ_API_KEY="gsk_your_api_key_here"
-```
-
-### 3. Run the Scanner
-
-```bash
-# Scan the vulnerable demo app WITH AI fixes
+```powershell
+# Windows PowerShell
+$env:GROQ_API_KEY="your_key_here"
 npm run scan:demo:ai
-
-# Scan the fixed demo app (to see an A+ score)
-npm run scan:fixed:ai
 ```
 
-### 4. Launch the Interactive Dashboard
-
 ```bash
-# Spin up the local SPA dashboard on port 4000
-npm run dashboard
+# Linux / macOS
+export GROQ_API_KEY="your_key_here"
+npm run scan:demo:ai
 ```
 
 ---
 
-## 🎯 Core Features Breakdown
+## Quality & CI
 
-### 📊 The Interactive Dashboard
-Run `npm run dashboard` after a scan to unlock a premium web interface featuring:
-- **Animated SVG Score Gauge:** Instantly see your A-F Grade.
-- **OWASP Heatmap & Radar Chart:** Visualize which OWASP Top 10 categories are most violated.
-- **Real-Time Search & Filtering:** Find vulnerabilities by severity or finding type instantly.
-- **1-Click Code Copy:** Copy AI-generated code fixes directly to your clipboard.
+- **Unit tests:** run `npm test` — **19** tests covering config merge, policy, scanner rules, SARIF rule IDs, and Git-bounded config discovery.
+- **Build:** `npm run build` (TypeScript → `dist/`).
+- **GitHub Actions:** [.github/workflows/guardrail.yml](.github/workflows/guardrail.yml) runs install, scan, and security upload steps on pushes/PRs to `main`/`master`.
 
-### 🤖 AI Remediation Engine (Groq / LLaMA 3)
-Guardrail intelligently groups similar vulnerabilities (e.g., duplicate dependency flaws) to save API quota, then queries **LLaMA 3.3 70B via Groq** to generate:
-- A clear explanation of the exploit.
-- A drop-in code snippet to fix the vulnerability.
-- Official references directly to the OWASP Cheat Sheet Series.
+---
 
-### ⚙️ `.guardrailrc.json` Configuration
-The scanner discovers the **Git repository root** (first ancestor containing `.git`). It loads **every** `.guardrailrc.json` on the path from that root **down to `<scan-path>`** and merges them in order (**repo root first**, then each subdirectory down to the target). If there is **no** Git root (no `.git` above the target), only `<scan-path>` is used for config lookup. **Deeper folders override** scalar fields (`policy`, `rules`, `ai`, `report`); `ignore.paths` and `ignore.findings` are **unioned** (deduped). Use this to share org-wide defaults at the repo root and project-specific overrides in subfolders.
+## Ethics & competition use
 
-- **`policy.failOn`:** severities that fail the build (unless overridden by CLI `--fail-on=`).
-- **`policy.scoreThreshold`:** when **greater than 0**, the run **also fails** if the security score falls **below** this value (combined with severity policy).
-- **`ignore.paths`:** glob patterns (`*`, `**`) relative to the scan root — matching files are skipped.
-- **`ignore.findings`:** suppress findings by `type:…`, `title:…` substring, or exact title match.
+- This submission is **original team work** for HackOWASP / DoraHacks rules.
+- **Do not commit API keys.** Use `.env` locally (see `.env.example`); rotate any key that was ever pasted into chat or a public log.
+- AI suggestions are **assistive** — reviewers should treat them as hints, not audited patches.
+
+---
+
+## Core features
+
+### Interactive dashboard
+
+`npm run dashboard` — local SPA (default **port 4000**): score gauge, OWASP heatmap/radar, filtering, copy-friendly fix text when AI is enabled.
+
+### AI remediation (Groq / LLaMA 3.3)
+
+Groups similar findings to save quota, then requests short explanations and fix snippets. Requires `GROQ_API_KEY`.
+
+### `.guardrailrc.json`
+
+The scanner finds the **Git repository root** (ancestor with `.git`), loads every `.guardrailrc.json` from that root **down to the scan path**, and merges (**repo root first**, then deeper folders). Without Git, only the scan path is used. Deeper folders **override** scalars; `ignore.paths` / `ignore.findings` are **unioned** (deduped).
+
+- **`policy.failOn`:** severities that fail the run (unless `--fail-on=` is set — CLI wins).
+- **`policy.scoreThreshold`:** if **> 0**, the run **also fails** when the score is **below** this value.
+- **`ignore.paths`:** glob patterns (`*`, `**`) — matching files are skipped.
+- **`ignore.findings`:** suppress by `type:…`, `title:…`, or title substring.
+
+**CLI overrides for one run:** `--fail-on=…`, **`--output-dir=…`** (report folder; resolved from current working directory).
 
 ```json
 {
@@ -117,23 +134,33 @@ The scanner discovers the **Git repository root** (first ancestor containing `.g
 }
 ```
 
-**CLI vs config:** if you pass `--fail-on=…`, it **overrides** `policy.failOn` from the file for that run.
+**Self-scan of this repo:** the root `.guardrailrc.json` disables some rules and ignores `src/dashboard/**` because this codebase contains intentional pattern-test strings. When scanning **application** code, keep those rules **enabled** unless you have a reason not to.
 
-**Self-scan of this repo:** the root `.guardrailrc.json` disables a few rules (`xss`, `weakCrypto`) and ignores `src/dashboard/**` because the scanner, reporter templates, and dashboard embed string literals that otherwise trigger pattern-only rules. When you scan **application** codebases, keep those rules **enabled**.
+### GitHub PR workflow
 
-### 🤖 CI/CD Integration (GitHub PR Bot)
-Guardrail is built for enterprise pipelines. The included GitHub Actions workflow automatically:
-1. Runs the scan on every Pull Request.
-2. Uploads `.sarif` data to the **GitHub Security tab**.
-3. Posts a detailed, emoji-rich **Markdown comment directly on the PR** indicating pass/fail status, security score, and top findings.
+On PRs, the workflow can upload **SARIF** to GitHub Security and post a **Markdown PR comment** with score and summary (see workflow file for steps).
 
 ---
 
-## 🏆 HackOWASP 8.0 Impact Statement
+## npm scripts
 
-We built OWASP Guardrail because security tooling shouldn't be a chore—it should be a superpower. By combining **instant AI remediation** with **executive-level scoring** and **seamless CI/CD**, we bridge the gap between security teams (who want compliance) and developers (who want to ship fast).
-
-**This is the future of DevSecOps.**
+| Script | Purpose |
+|--------|---------|
+| `npm run guardrail -- scan <path>` | Scan a path |
+| `npm run scan:demo` / `scan:fixed` | Demo apps without AI |
+| `npm run scan:demo:ai` / `scan:fixed:ai` | Demo apps with AI |
+| `npm run demo:judge` | **Judge bundle:** build + both demos + separate report folders |
+| `npm run demo:judge:ai` | Same with `--with-ai` |
+| `npm run dashboard` | Local dashboard |
+| `npm test` | Unit tests |
+| `npm run build` | Compile TypeScript |
 
 ---
-<p align="center"><i>Made with ❤️ by xinnxz</i></p>
+
+## Why we built this (HackOWASP 8.0)
+
+Security tooling should be **understandable in one demo**: show a failing app, show a fixed app, show the same tool producing **SARIF and a grade** for CI. Guardrail targets that story for Node teams and reviewers who care about **OWASP alignment** and **pipeline fit**.
+
+---
+
+<p align="center"><i>Made with care by xinnxz — OWASP Guardrail</i></p>

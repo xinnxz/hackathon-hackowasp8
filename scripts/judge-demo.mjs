@@ -24,7 +24,7 @@ function runScan(target, outputDir) {
   return r.status ?? 0;
 }
 
-const codeVuln = runScan("demo/vulnerable-app", "./report-demo-vulnerable");
+runScan("demo/vulnerable-app", "./report-demo-vulnerable");
 const codeFixed = runScan("demo/fixed-app", "./report-demo-fixed");
-// Prefer fixed-app result so a policy FAIL on the vulnerable demo does not block the script.
-process.exitCode = codeFixed !== 0 ? codeFixed : codeVuln;
+// Exit 0 if the fixed demo passes (expected). Vulnerable demo often exits 1 due to fail-on policy.
+process.exitCode = codeFixed !== 0 ? codeFixed : 0;
