@@ -72,7 +72,6 @@ async function main(): Promise<void> {
   };
 
   const outputDir = path.resolve(config.report.outputDir);
-  config.report.outputDir = outputDir;
   await fs.mkdir(outputDir, { recursive: true });
 
   const jsonPath = path.join(outputDir, "guardrail-report.json");
@@ -125,6 +124,12 @@ function parseFailOnFromArgs(args: string[]): { explicit: boolean; values?: Seve
 function parseApiKey(args: string[]): string | undefined {
   const flag = args.find((a) => a.startsWith("--api-key="));
   return flag ? flag.replace("--api-key=", "").trim() : undefined;
+}
+
+function parseOutputDirFromArgs(args: string[]): string | undefined {
+  const flag = args.find((a) => a.startsWith("--output-dir="));
+  const raw = flag?.slice("--output-dir=".length).trim();
+  return raw ? raw : undefined;
 }
 
 function summarizeFindings(findings: GuardrailReport["findings"]): Record<Severity, number> {
