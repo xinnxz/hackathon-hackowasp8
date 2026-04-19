@@ -1,198 +1,171 @@
-# 🎬 OWASP Guardrail — Video Demo Script (Juara 1 Strategy)
+# 🎬 OWASP Guardrail — Video Demo Script
 
 ## Overview
-- **Target Durasi:** 3–5 menit (ideal untuk hackathon)
-- **Tone:** Profesional, percaya diri, to-the-point
-- **Tools yang diperlukan:** Terminal (PowerShell/CMD), Browser (Chrome), Screen recorder (OBS/Loom/ScreenPal)
+- **Target Duration:** 3 minutes (sweet spot for hackathon judges)
+- **Tone:** Confident, professional, zero filler words
+- **Language:** English (international hackathon standard)
+- **Tools:** Terminal (Windows Terminal dark theme), Browser (Chrome fullscreen), OBS/Loom
 
 ---
 
-## 📋 Struktur Video (7 Scene)
+## 📋 Structure (5 Scenes)
 
-### 🎬 SCENE 1 — Opening Hook (15 detik)
-**Visual:** Tampilkan layar gelap → fade-in logo/banner OWASP Guardrail
+### 🎬 SCENE 1 — Opening Hook (20 seconds)
 
-**Narasi:**
-> *"Security bugs cost companies millions. But most security scanners are too heavy, too slow, or too noisy for small teams and CI pipelines. We built OWASP Guardrail — a zero-dependency DevSecOps scanner that maps to OWASP Top 10, grades your code A+ to F, and uses AI to auto-generate fixes. Let me show you."*
+**Visual:** Dark screen → fade-in OWASP Guardrail banner/logo → cut to you at terminal
+
+**Narration:**
+> *"74% of breached applications had known vulnerabilities that automated tooling could have caught. But enterprise scanners like SonarQube need JVMs, Docker, and paid licenses. We built OWASP Guardrail — a zero-dependency scanner that detects, grades, and auto-fixes security flaws using AI. Let me show you how it works in under 3 minutes."*
 
 > [!TIP]
-> Buat opening yang impactful. Juri biasanya memutuskan dalam 30 detik pertama apakah proyek ini menarik.
+> Judges decide within 15 seconds if your project is worth watching. The opening stat (74%) creates immediate urgency. Speak with authority — no filler words like "um" or "so basically."
 
 ---
 
-### 🎬 SCENE 2 — The Problem (30 detik)
-**Visual:** Tampilkan slide sederhana (bisa pakai PowerPoint/Canva) dengan bullet points:
+### 🎬 SCENE 2 — Live Scan: Vulnerable App (50 seconds)
 
-**Poin yang disampaikan:**
-1. ❌ Enterprise SAST tools (SonarQube, Checkmarx) → **Berat, butuh JVM, setup rumit**
-2. ❌ Basic linters → **Tidak map ke OWASP, tidak ada scoring**
-3. ❌ Manual code review → **Lambat, tidak scalable**
-4. ✅ **OWASP Guardrail** → **Cepat, zero-JVM, OWASP-aligned, AI-powered, CI-ready**
+**Visual:** Terminal fullscreen, font 16px+, dark theme
 
-**Narasi:**
-> *"Teams need three things from security tooling: speed, clarity, and pipeline fit. Existing tools force you to choose. Guardrail delivers all three."*
-
----
-
-### 🎬 SCENE 3 — Live Terminal Demo: Scanning Vulnerable App (60 detik)
-**Visual:** Terminal fullscreen, font size besar (16-18px)
-
-**Perintah yang diketik LIVE:**
+**Step 1 — Type the command live:**
 ```bash
-# Clone dan install
-npm install
-
-# Scan aplikasi yang SENGAJA rentan
 npm run scan:demo
 ```
 
-**Narasi saat menunggu output:**
-> *"We intentionally built a vulnerable demo app with real-world security flaws — SQL injection, hardcoded secrets, wildcard CORS, weak crypto, and more. Let's see what Guardrail finds."*
+**While output loads (2-3 seconds), narrate:**
+> *"I'm scanning a demo app intentionally packed with real-world security flaws — SQL injection, hardcoded GitHub tokens, vulnerable npm packages, and missing authorization."*
 
-**Saat output muncul, highlight:**
-- Banner ASCII art yang profesional `⛨ OWASP GUARDRAIL v2.0`
-- Config auto-merge dari `.guardrailrc.json`
-- Tabel severity breakdown: **2 Critical, 6 High, 2 Medium, 3 Low**
+**When output appears, point at each section:**
+- ⛨ OWASP GUARDRAIL v2.0 banner
+- Config auto-merge: `.guardrailrc.json`
+- Severity Breakdown table: **2 Critical, 6 High, 2 Medium, 3 Low**
+- Findings Preview: highlight the `[CRITICAL] SQL Injection` and `[CRITICAL] GitHub token committed` lines
 - Score: **F (0/100)**
 - Result: **✖ FAIL (policy violation)**
 
-**Narasi:**
-> *"Guardrail found 13 findings across 4 severity levels. The score is F — zero out of 100. The policy engine automatically BLOCKS the build because we configured fail-on high and critical. This is exactly what you want in a CI pipeline."*
+**Narration:**
+> *"13 findings across 4 severity levels. Score: F — zero out of 100. The policy engine automatically blocks the build because we set fail-on high and critical. In a CI/CD pipeline, this code would never reach production."*
 
 ---
 
-### 🎬 SCENE 4 — Live Terminal Demo: Scanning Fixed App (45 detik)
-**Visual:** Tetap di terminal
+### 🎬 SCENE 3 — Live Scan: Fixed App + Before/After (30 seconds)
 
-**Perintah:**
+**Visual:** Same terminal, clear screen first
+
+**Type live:**
 ```bash
-# Sekarang scan aplikasi yang sudah diperbaiki
 npm run scan:fixed
 ```
 
-**Narasi saat menunggu:**
-> *"Now let's scan the same app after fixing all the vulnerabilities."*
-
-**Saat output muncul, highlight:**
-- Score: **A+ (100/100)**
+**When output appears, highlight:**
+- Score: **A+ (100/100)** with full green progress bar
 - Result: **✔ PASS**
-- _"No findings — clean scan!"_
+- Zero findings
 
-**Narasi:**
-> *"A+ — 100 out of 100. Zero findings. The policy engine PASSES the build. This is the before-and-after story that makes security tangible for developers."*
+**Narration:**
+> *"Same app, all vulnerabilities fixed. A+ — 100 out of 100. Zero findings. The policy engine passes the build. This before-and-after — F to A+ — is the story Guardrail tells your team every single commit."*
 
 > [!IMPORTANT]
-> **Ini adalah momen klimaks video.** Pastikan transisi dari F → A+ terlihat jelas dan dramatis. Juri akan langsung paham value-nya.
+> This is the climax moment. The transition from Grade F → Grade A+ must feel dramatic. Pause for 1 second after "A+" to let it sink in visually.
 
 ---
 
-### 🎬 SCENE 5 — HTML Report & Dashboard Showcase (60 detik)
-**Visual:** Buka browser, tampilkan file HTML report
+### 🎬 SCENE 4 — Dashboard + AI Fixes (60 seconds)
 
-**Langkah:**
-1. Buka `report-demo-vulnerable/guardrail-report.html` di browser
-2. Perlihatkan:
-   - **Score Gauge** (animasi lingkaran dari 0 ke skor)
-   - **Severity breakdown cards** (Critical merah, High oranye, dst)
-   - **OWASP Top 10 Heatmap** (tiles berwarna)
-   - **Finding cards** — klik salah satu untuk expand detail
-   - **AI Fix Suggestions** — scroll ke bawah, tunjukkan code snippet
-3. Klik tab **Findings** → demo search/filter
-4. Klik tab **OWASP** → tunjukkan distribution table
-5. Klik tab **AI Fixes** → tunjukkan AI-generated remediation
+**Visual:** Switch to browser (Chrome fullscreen, zoom 110%)
 
-**Narasi:**
-> *"Every scan generates a beautiful, self-contained HTML report. No server needed — just open the file. The report includes an interactive score gauge, OWASP Top 10 heatmap, severity filtering, and — when AI mode is enabled — actual code fix suggestions powered by Groq's LLaMA 3.3."*
+**Step 1 — Show the Live Dashboard:**
+Open `http://localhost:4000` (make sure `npm run dashboard` is running in background with vulnerable app data)
 
----
+Point at:
+- Security Score gauge (animated)
+- Grade card (F with red accent)
+- OWASP Top 10 Coverage bar chart
+- Severity Distribution donut chart
+- Recent Findings table
 
-### 🎬 SCENE 6 — CI/CD Integration & SARIF (45 detik)
-**Visual:** Tampilkan GitHub Actions workflow + GitHub Security tab (screenshot jika perlu)
+**Narration:**
+> *"Every scan generates a premium visual dashboard. Security score, OWASP Top 10 coverage, severity distribution — all rendered dynamically from real scan data. No mock data, no static screenshots."*
 
-**Langkah:**
-1. Buka file `.github/workflows/guardrail.yml` di editor — tunjukkan workflow
-2. Tampilkan screenshot/video dari GitHub Actions run yang sukses
-3. Tampilkan tab **Security** di GitHub repo (SARIF findings muncul di sana)
-4. Tampilkan **PR Comment** yang otomatis ditempelkan oleh bot
+**Step 2 — Click through tabs:**
+- Click **"Findings"** tab → show full findings list with file locations
+- Click **"OWASP Map"** tab → show categories with progress bars
+- Click **"AI Fixes"** tab → show AI-generated code remediation
 
-**Narasi:**
-> *"Guardrail integrates directly into GitHub Actions. On every push or pull request, it runs the scan, uploads SARIF to GitHub Security for native vulnerability tracking, and posts a Markdown summary as a PR comment. Developers get instant feedback without leaving their workflow."*
+**Narration:**
+> *"And here's the killer feature. When you scan with the --with-ai flag, Guardrail sends each vulnerability to Groq's LLaMA 3.3 model. The AI returns an explanation, the fixed code, and security references. Developers can copy-paste the fix directly. No other open-source Node.js scanner does this."*
 
-**Poin kunci:**
-- SARIF upload ke GitHub Security Center
-- PR comment otomatis dengan score + severity table
-- Artifact upload (HTML + JSON reports)
+**Step 3 — Quick HTML report:**
+Open `report/guardrail-report.html` in a new tab
+
+**Narration:**
+> *"We also generate self-contained HTML reports, JSON for APIs, SARIF for GitHub Security integration, and Markdown summaries — 5 formats from every single scan."*
 
 ---
 
-### 🎬 SCENE 7 — Closing & Architecture (30 detik)
-**Visual:** Tampilkan diagram arsitektur sederhana (dari `docs/ARCHITECTURE.md` atau buat slide)
+### 🎬 SCENE 5 — CI/CD + Closing (30 seconds)
 
-**Narasi:**
-> *"OWASP Guardrail is built with TypeScript, zero runtime dependencies, and a modular architecture. The scanner runs pattern-based rules mapped to OWASP Top 10, produces industry-standard SARIF, and optionally calls Groq AI for remediation. It's designed to be fast, honest, and developer-friendly."*
+**Visual:** Switch to VS Code, show `.github/workflows/guardrail.yml`
 
-> *"We built this because security tooling should be understandable in one demo — and we hope we just proved that. Thank you."*
+**Narration:**
+> *"Guardrail plugs directly into GitHub Actions. On every push, it scans the code, uploads SARIF to GitHub's Security tab, and posts a score summary as a PR comment. If the scan fails, the pipeline blocks the merge. Zero configuration, zero dependencies."*
+
+**Visual:** Cut back to you or banner slide
+
+**Closing narration:**
+> *"OWASP Guardrail: 30 unit tests passing, 8 vulnerability categories, OWASP Top 10 mapping, AI auto-remediation, and a premium dashboard — all in a single npm install. We didn't build another scanner. We built the one that makes all others obsolete. Thank you."*
 
 ---
 
-## 🎯 Checklist Sebelum Rekam Video
+## 🎯 Pre-Recording Checklist
 
-### Persiapan Terminal
-- [ ] Font size terminal: **16px minimum** (agar terbaca di video)
-- [ ] Warna terminal: **Dark theme** (PowerShell/Windows Terminal dark)
-- [ ] Clear terminal sebelum setiap perintah (`cls` atau `clear`)
-- [ ] Pastikan `npm install` sudah selesai sebelumnya (jangan buang waktu install di video)
+### Terminal
+- [ ] Font size: **16px minimum**
+- [ ] Theme: **Dark** (Windows Terminal or VS Code integrated terminal)
+- [ ] Run `cls` before each command for clean screen
+- [ ] Run `npm install` beforehand (don't waste video time on install)
 
-### Persiapan Browser
-- [ ] Zoom browser: **110-125%** (agar UI dashboard terbaca)
-- [ ] Tutup semua tab lain (bersihkan bookmark bar jika perlu)
-- [ ] Mode fullscreen (F11)
+### Browser
+- [ ] Zoom: **110-125%** for readable dashboard
+- [ ] Close all other tabs and bookmark bars
+- [ ] Fullscreen mode (F11)
 
-### Persiapan Rekaman
-- [ ] Resolusi: **1920x1080** (Full HD minimum)
+### Data Preparation
+- [ ] Run `npm run scan:demo` first to generate vulnerable report data
+- [ ] Run `npm run dashboard` in a background terminal before recording Scene 4
+- [ ] Set `GROQ_API_KEY` environment variable if demoing AI fixes live
+- [ ] Open HTML report once to confirm it renders perfectly
+
+### Recording
+- [ ] Resolution: **1920x1080** (Full HD)
 - [ ] Frame rate: **30 fps**
-- [ ] Audio: Gunakan mikrofon yang jernih (hindari mic laptop built-in jika bisa)
-- [ ] Cursor highlight: Aktifkan cursor highlighting jika ada
-
-### Persiapan Konten
-- [ ] Jalankan `npm run demo:judge` sekali sebelumnya agar folder `report-demo-vulnerable/` dan `report-demo-fixed/` sudah ada
-- [ ] Set `GROQ_API_KEY` di environment jika ingin demo AI live
-- [ ] Buka report HTML di browser sebelumnya untuk memastikan tampil sempurna
+- [ ] Microphone: External mic preferred (avoid built-in laptop mic)
+- [ ] Record each scene separately, edit together later
 
 ---
 
-## 💡 Tips Pro untuk Memenangkan Hackathon
+## 📝 Recording Order (Recommended)
 
-### 1. Gunakan "Before & After" Storytelling
-Juri sangat menyukai narasi **transformasi**. Tunjukkan app yang rentan (skor F) → perbaiki → scan lagi (skor A+). Ini visual dan mudah dipahami.
+| # | What to Record | Duration | Notes |
+|---|---|---|---|
+| 1 | Terminal: `npm run scan:demo` | 30s | Show full output, pause on FAIL |
+| 2 | Terminal: `npm run scan:fixed` | 20s | Show A+ PASS, let it breathe |
+| 3 | Browser: Dashboard all 4 tabs | 50s | Click through Dashboard → Findings → OWASP → AI |
+| 4 | Browser: HTML report quick flash | 10s | Show it's self-contained |
+| 5 | VS Code: `guardrail.yml` workflow | 10s | Show CI/CD integration |
+| 6 | Opening banner + closing slide | 20s | Record last, add in editing |
 
-### 2. Jangan Terlalu Teknis
-Hindari menjelaskan implementasi regex atau internal TypeScript. Fokus pada **dampak**: "Tool ini mendeteksi X jenis kerentanan dan otomatis menyarankan perbaikan."
-
-### 3. Tunjukkan "Real-World Readiness"
-CI/CD integration dan SARIF output adalah bukti bahwa ini bukan toy project. Tekankan bahwa tool ini bisa langsung dipasang di pipeline produksi.
-
-### 4. Sebutkan Angka Spesifik
-- "27 unit tests, all passing"
-- "13 security rules mapped to 7 OWASP Top 10 categories"
-- "5 report formats: JSON, HTML, SARIF, Markdown, PR Comment"
-- "AI fixes powered by LLaMA 3.3-70B via Groq"
-
-### 5. Akhiri dengan Confidence
-> *"We didn't just build a scanner. We built a complete DevSecOps pipeline tool that any team can adopt in under 5 minutes."*
+**Total raw footage:** ~2.5 minutes. Final edited video: **3 minutes sharp.**
 
 ---
 
-## 📝 Urutan Rekaman yang Disarankan
+## 💡 Pro Tips
 
-| No | Apa yang direkam | Durasi | Tool |
-|----|------------------|--------|------|
-| 1 | Terminal: `npm run scan:demo` (vulnerable) | 30s | Screen recorder |
-| 2 | Terminal: `npm run scan:fixed` (fixed) | 20s | Screen recorder |
-| 3 | Browser: HTML Report vulnerable (semua tab) | 60s | Screen recorder |
-| 4 | Browser: HTML Report fixed (A+ clean) | 15s | Screen recorder |
-| 5 | Browser: Dashboard live (`npm run dashboard`) | 30s | Screen recorder |
-| 6 | Editor: GitHub Actions workflow file | 15s | Screen recorder |
-| 7 | Terminal: `npm test` (27 tests passing) | 15s | Screen recorder |
+1. **Never say "um", "so basically", or "as you can see"** — these destroy credibility instantly
+2. **Use numbers:** "30 tests passing", "13 findings", "5 report formats", "under 500 milliseconds"
+3. **Pause after impact moments** — after the F→A+ transition, let the visual speak for 1–2 seconds
+4. **Don't explain code internals** — judges care about WHAT it does, not HOW the regex works
+5. **End with confidence** — your last sentence should feel like a mic drop, not a question
 
-Total raw footage: ~3-4 menit. Edit menjadi video akhir 3-5 menit.
+---
+
+*"We didn't build another scanner. We built the one that makes all others obsolete."*

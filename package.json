@@ -1,7 +1,7 @@
 {
-  "name": "hackowasp8",
+  "name": "owasp-guardrail",
   "version": "2.0.0",
-  "description": "OWASP Guardrail — Enterprise DevSecOps Scanner with AI",
+  "description": "OWASP Guardrail — Zero-dependency DevSecOps scanner with OWASP Top 10 mapping, A+ to F grading, and Groq LLaMA 3.3 AI auto-remediation",
   "main": "dist/cli.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -15,9 +15,29 @@
     "demo:judge": "npm run build && node --no-warnings scripts/judge-demo.mjs",
     "demo:judge:ai": "npm run build && node --no-warnings scripts/judge-demo.mjs --with-ai"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "owasp",
+    "security",
+    "scanner",
+    "sast",
+    "devsecops",
+    "vulnerability",
+    "ai",
+    "groq",
+    "llama",
+    "sarif",
+    "ci-cd",
+    "hackowasp"
+  ],
+  "author": "xinnxz",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xinnxz/hackowasp8.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "^25.6.0",

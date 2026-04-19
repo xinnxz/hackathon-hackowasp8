@@ -1,13 +1,42 @@
+# ════════════════════════════════════════════════
+# ⛨  OWASP Guardrail — Git Ignore Rules
+# ════════════════════════════════════════════════
+
+# ── Dependencies ───────────────────────────────
 node_modules/
+
+# ── Build Output ───────────────────────────────
 dist/
+
+# ── Generated Reports ──────────────────────────
 report/*.json
 report/*.html
+report/*.sarif
+report/*.md
 report-demo-vulnerable/
 report-demo-fixed/
+
+# ── Environment & Secrets ──────────────────────
 .env
 .env.local
 .env.*.local
+
+# ── Demo App Dependencies ──────────────────────
 demo/vulnerable-app/node_modules/
 demo/vulnerable-app/package-lock.json
 demo/fixed-app/node_modules/
 demo/fixed-app/package-lock.json
+
+# ── IDE & OS ───────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Debug Logs ─────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log

@@ -6,10 +6,1387 @@
       "tool": {
         "driver": {
           "name": "OWASP Guardrail",
-          "rules": []
+          "rules": [
+            {
+              "id": "GR-xss-510d9a072d11",
+              "name": "Potential XSS sink detected",
+              "shortDescription": {
+                "text": "Potential XSS sink detected"
+              },
+              "fullDescription": {
+                "text": "Direct HTML sinks can enable script injection when content is not sanitized."
+              },
+              "help": {
+                "text": "Sanitize untrusted content or use safer rendering APIs."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "xss",
+                  "high",
+                  "A03:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-secret-efcc5a0a3b1d",
+              "name": "High-entropy credential-like value found",
+              "shortDescription": {
+                "text": "High-entropy credential-like value found"
+              },
+              "fullDescription": {
+                "text": "A long high-entropy string appears next to a secret-like variable name."
+              },
+              "help": {
+                "text": "Replace the hardcoded value with an environment variable and rotate the credential."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "secret",
+                  "high",
+                  "A07:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-0f7e8940689f",
+              "name": "Dependency vulnerability: xlsx",
+              "shortDescription": {
+                "text": "Dependency vulnerability: xlsx"
+              },
+              "fullDescription": {
+                "text": "2 advisory item(s) detected for xlsx. Range: *."
+              },
+              "help": {
+                "text": "Review xlsx manually and replace it with a maintained alternative if no safe upgrade exists."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "high",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-misconfiguration-d921baead99e",
+              "name": "Insecure HTTP endpoint hardcoded",
+              "shortDescription": {
+                "text": "Insecure HTTP endpoint hardcoded"
+              },
+              "fullDescription": {
+                "text": "Hardcoded non-TLS URL can leak data over plaintext transport."
+              },
+              "help": {
+                "text": "Use HTTPS endpoints and enforce TLS for outbound calls."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "misconfiguration",
+                  "medium",
+                  "A05:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-37389e2a1af2",
+              "name": "Dependency vulnerability: axios",
+              "shortDescription": {
+                "text": "Dependency vulnerability: axios"
+              },
+              "fullDescription": {
+                "text": "2 advisory item(s) detected for axios. Range: 1.0.0 - 1.14.0."
+              },
+              "help": {
+                "text": "Upgrade axios to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "medium",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-cec8360f9e9f",
+              "name": "Dependency vulnerability: esbuild",
+              "shortDescription": {
+                "text": "Dependency vulnerability: esbuild"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for esbuild. Range: <=0.24.2."
+              },
+              "help": {
+                "text": "Upgrade esbuild to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "medium",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-473917e8cd93",
+              "name": "Dependency vulnerability: follow-redirects",
+              "shortDescription": {
+                "text": "Dependency vulnerability: follow-redirects"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for follow-redirects. Range: <=1.15.11."
+              },
+              "help": {
+                "text": "Upgrade follow-redirects to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "medium",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-4187f046870f",
+              "name": "Dependency vulnerability: tronweb",
+              "shortDescription": {
+                "text": "Dependency vulnerability: tronweb"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for tronweb. Range: 5.3.5 || >=6.0.3."
+              },
+              "help": {
+                "text": "Upgrade tronweb to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "medium",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-d659d9df6eeb",
+              "name": "Dependency vulnerability: vite",
+              "shortDescription": {
+                "text": "Dependency vulnerability: vite"
+              },
+              "fullDescription": {
+                "text": "2 advisory item(s) detected for vite. Range: <=6.4.1."
+              },
+              "help": {
+                "text": "Upgrade vite to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "medium",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-162cbda8b84c",
+              "name": "Dependency vulnerability: @cosmjs/amino",
+              "shortDescription": {
+                "text": "Dependency vulnerability: @cosmjs/amino"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for @cosmjs/amino. Range: <=0.33.1."
+              },
+              "help": {
+                "text": "Upgrade @cosmjs/amino to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "low",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-26fe564f9097",
+              "name": "Dependency vulnerability: @cosmjs/crypto",
+              "shortDescription": {
+                "text": "Dependency vulnerability: @cosmjs/crypto"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for @cosmjs/crypto. Range: <=0.33.1."
+              },
+              "help": {
+                "text": "Upgrade @cosmjs/crypto to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "low",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-40f4340ee63d",
+              "name": "Dependency vulnerability: @cosmjs/proto-signing",
+              "shortDescription": {
+                "text": "Dependency vulnerability: @cosmjs/proto-signing"
+              },
+              "fullDescription": {
+                "text": "2 advisory item(s) detected for @cosmjs/proto-signing. Range: 0.25.0-alpha.0 - 0.33.1."
+              },
+              "help": {
+                "text": "Upgrade @cosmjs/proto-signing to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "low",
+                  "A06:2021"
+                ]
+              }
+            },
+            {
+              "id": "GR-dependency-869507de0d91",
+              "name": "Dependency vulnerability: elliptic",
+              "shortDescription": {
+                "text": "Dependency vulnerability: elliptic"
+              },
+              "fullDescription": {
+                "text": "1 advisory item(s) detected for elliptic. Range: *."
+              },
+              "help": {
+                "text": "Upgrade elliptic to the patched version recommended by npm audit."
+              },
+              "properties": {
+                "tags": [
+                  "owasp",
+                  "dependency",
+                  "low",
+                  "A06:2021"
+                ]
+              }
+            }
+          ]
         }
       },
-      "results": []
+      "results": [
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\content\\scanner.js"
+                },
+                "region": {
+                  "startLine": 188
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 99
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 144
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 177
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 178
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 208
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 216
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 228
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 231
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 279
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 284
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 322
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 333
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 335
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 348
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 351
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "extension\\popup\\popup.js"
+                },
+                "region": {
+                  "startLine": 388
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-secret-efcc5a0a3b1d",
+          "level": "error",
+          "message": {
+            "text": "High-entropy credential-like value found: A long high-entropy string appears next to a secret-like variable name."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "mobile\\package-lock.json"
+                },
+                "region": {
+                  "startLine": 6709
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-secret-efcc5a0a3b1d",
+          "level": "error",
+          "message": {
+            "text": "High-entropy credential-like value found: A long high-entropy string appears next to a secret-like variable name."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package-lock.json"
+                },
+                "region": {
+                  "startLine": 3436
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 199
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 202
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 348
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 382
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 384
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 439
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\app.js"
+                },
+                "region": {
+                  "startLine": 444
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\bulktools.js"
+                },
+                "region": {
+                  "startLine": 86
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\bulktools.js"
+                },
+                "region": {
+                  "startLine": 89
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\chains.js"
+                },
+                "region": {
+                  "startLine": 71
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\chains.js"
+                },
+                "region": {
+                  "startLine": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\chains.js"
+                },
+                "region": {
+                  "startLine": 112
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\converter.js"
+                },
+                "region": {
+                  "startLine": 256
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\encrypt.js"
+                },
+                "region": {
+                  "startLine": 211
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\encrypt.js"
+                },
+                "region": {
+                  "startLine": 243
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\hdwallet.js"
+                },
+                "region": {
+                  "startLine": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\hdwallet.js"
+                },
+                "region": {
+                  "startLine": 94
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\hdwallet.js"
+                },
+                "region": {
+                  "startLine": 116
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\nav.js"
+                },
+                "region": {
+                  "startLine": 98
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\nav.js"
+                },
+                "region": {
+                  "startLine": 155
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\paperwallet.js"
+                },
+                "region": {
+                  "startLine": 59
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\paperwallet.js"
+                },
+                "region": {
+                  "startLine": 78
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\qrcode-page.js"
+                },
+                "region": {
+                  "startLine": 95
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\qrcode-page.js"
+                },
+                "region": {
+                  "startLine": 155
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\qrcode-page.js"
+                },
+                "region": {
+                  "startLine": 165
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\qrcode-page.js"
+                },
+                "region": {
+                  "startLine": 218
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-xss-510d9a072d11",
+          "level": "error",
+          "message": {
+            "text": "Potential XSS sink detected: Direct HTML sinks can enable script injection when content is not sanitized."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\validator.js"
+                },
+                "region": {
+                  "startLine": 425
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-0f7e8940689f",
+          "level": "error",
+          "message": {
+            "text": "Dependency vulnerability: xlsx: 2 advisory item(s) detected for xlsx. Range: *."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-misconfiguration-d921baead99e",
+          "level": "warning",
+          "message": {
+            "text": "Insecure HTTP endpoint hardcoded: Hardcoded non-TLS URL can leak data over plaintext transport."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\circuit-bg.js"
+                },
+                "region": {
+                  "startLine": 11
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-misconfiguration-d921baead99e",
+          "level": "warning",
+          "message": {
+            "text": "Insecure HTTP endpoint hardcoded: Hardcoded non-TLS URL can leak data over plaintext transport."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "web\\icons.js"
+                },
+                "region": {
+                  "startLine": 16
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-37389e2a1af2",
+          "level": "warning",
+          "message": {
+            "text": "Dependency vulnerability: axios: 2 advisory item(s) detected for axios. Range: 1.0.0 - 1.14.0."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-cec8360f9e9f",
+          "level": "warning",
+          "message": {
+            "text": "Dependency vulnerability: esbuild: 1 advisory item(s) detected for esbuild. Range: <=0.24.2."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-473917e8cd93",
+          "level": "warning",
+          "message": {
+            "text": "Dependency vulnerability: follow-redirects: 1 advisory item(s) detected for follow-redirects. Range: <=1.15.11."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-4187f046870f",
+          "level": "warning",
+          "message": {
+            "text": "Dependency vulnerability: tronweb: 1 advisory item(s) detected for tronweb. Range: 5.3.5 || >=6.0.3."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-d659d9df6eeb",
+          "level": "warning",
+          "message": {
+            "text": "Dependency vulnerability: vite: 2 advisory item(s) detected for vite. Range: <=6.4.1."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-162cbda8b84c",
+          "level": "note",
+          "message": {
+            "text": "Dependency vulnerability: @cosmjs/amino: 1 advisory item(s) detected for @cosmjs/amino. Range: <=0.33.1."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-26fe564f9097",
+          "level": "note",
+          "message": {
+            "text": "Dependency vulnerability: @cosmjs/crypto: 1 advisory item(s) detected for @cosmjs/crypto. Range: <=0.33.1."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-40f4340ee63d",
+          "level": "note",
+          "message": {
+            "text": "Dependency vulnerability: @cosmjs/proto-signing: 2 advisory item(s) detected for @cosmjs/proto-signing. Range: 0.25.0-alpha.0 - 0.33.1."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "GR-dependency-869507de0d91",
+          "level": "note",
+          "message": {
+            "text": "Dependency vulnerability: elliptic: 1 advisory item(s) detected for elliptic. Range: *."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "package.json"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

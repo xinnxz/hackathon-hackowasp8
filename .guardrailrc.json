@@ -4,8 +4,15 @@
     "scoreThreshold": 0
   },
   "rules": {
-    "xss": false,
-    "weakCrypto": false
+    "cors": true,
+    "injection": true,
+    "authMiddleware": true,
+    "xss": true,
+    "eval": true,
+    "ssrf": true,
+    "insecureHttp": false,
+    "weakCrypto": true,
+    "pathTraversal": true
   },
   "ignore": {
     "paths": [
