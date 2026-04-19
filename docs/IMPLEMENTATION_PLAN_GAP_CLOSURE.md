@@ -229,9 +229,9 @@ Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke code
 - `mergeFailOn` + `evaluatePass` (severity + `scoreThreshold`) mengatur `report.passed` dan `policy.notes`.
 - Contoh repo root: `.guardrailrc.json` untuk CI `scan .` yang mengabaikan `demo/`, `docs/`, `tests/`, dll.
 
-Item lanjutan opsional: SARIF rule id stabil, parent-directory config discovery, dan perluasan glob ignore.
+Item lanjutan opsional: perluasan glob `ignore.paths`, tes edge case tambahan (`loadConfig` pada file vs folder), dan polish laporan.
 
 ### 10.1 Update lanjutan (2026-04-19)
 
 - **SARIF rule id stabil:** `src/util/stableRuleId.ts` — hash SHA-256 dari `type` + `title`; `rules` di SARIF deduplikasi per id (tidak lagi `type-index`).
-- **Parent config:** `loadConfig()` menggabungkan berkas dari ancestor ke target (lihat log `Merged N file(s): …`).
+- **Parent config (Git-bounded):** `src/config/discovery.ts` — `listConfigDirectories` hanya dari **root Git** ke target; tanpa `.git`, hanya folder target. `loadConfig()` menggabungkan berkas dalam urutan itu (lihat log `Merged N file(s): …`).
