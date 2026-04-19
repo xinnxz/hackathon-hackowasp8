@@ -11,7 +11,9 @@ export function buildMarkdownReport(report: GuardrailReport): string {
     `> **Status:** ${statusBadge} | **Security Score:** ${gradeBadge} — ${sc.label}`,
     `> **Scan Target:** \`${report.scannedPath}\``,
     `> **Generated:** ${report.generatedAt}`,
-    `> **Policy:** Fail on [${report.policy.failOn.join(", ")}]`,
+    `> **Policy:** Fail on [${report.policy.failOn.join(", ")}]${
+      report.policy.scoreThreshold > 0 ? ` | score threshold: **${report.policy.scoreThreshold}**` : ""
+    }`,
     "",
     "## Summary",
     "",

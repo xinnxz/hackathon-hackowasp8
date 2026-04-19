@@ -133,8 +133,8 @@ pre{background:#080718;border:1px solid #2d2560;border-radius:6px;padding:12px;o
       <div class="meta-grid">
         <div><b>Target:</b> ${escapeHtml(report.scannedPath)}</div>
         <div><b>Generated:</b> ${escapeHtml(report.generatedAt)}</div>
-        <div><b>Policy:</b> fail-on [${report.policy.failOn.join(", ")}]</div>
-        <div><b>AI Mode:</b> ${report.findings.some((f) => f.aiSuggestion?.source === "gemini") ? "🤖 LLaMA 3.3-70B (Groq)" : "📋 Fallback"}</div>
+        <div><b>Policy:</b> fail-on [${report.policy.failOn.join(", ")}]${report.policy.scoreThreshold > 0 ? ` | score ≥ ${report.policy.scoreThreshold}` : ""}</div>
+        <div><b>AI Mode:</b> ${report.findings.some((f) => f.aiSuggestion?.source === "groq") ? "🤖 LLaMA 3.3-70B (Groq)" : "📋 Fallback"}</div>
       </div>
     </div>
   </div>
