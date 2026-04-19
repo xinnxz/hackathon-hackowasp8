@@ -2,7 +2,7 @@
 
 > **Status:** ❌ FAIL | **Security Score:** **F** (0/100) — Critical — Immediate action required
 > **Scan Target:** `E:\DATA\Ngoding\hackowasp8\demo\vulnerable-app`
-> **Generated:** 2026-04-18T23:55:07.873Z
+> **Generated:** 2026-04-19T00:01:09.070Z
 > **Policy:** Fail on [high, critical]
 
 ## Summary
@@ -36,6 +36,17 @@
 
 **Recommendation:** Remove the token, rotate it, and load credentials from environment variables or a secrets manager.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+Hardcoding sensitive information like GitHub tokens directly into source code is dangerous because it can be exposed to unauthorized parties, especially if the code is pushed to a public repository. This can lead to unauthorized access to GitHub accounts, repositories, and other protected resources, potentially resulting in data breaches, code tampering, or other malicious activities.
+
+```
+const apiToken = process.env.GITHUB_TOKEN;
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+
 ---
 
 ### 🔴 `CRITICAL` — String-concatenated SQL query detected
@@ -47,6 +58,19 @@
 **Description:** Manual query concatenation can enable SQL injection and data exposure.
 
 **Recommendation:** Use parameterized queries or a query builder that binds untrusted input safely.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+String-concatenated SQL queries are vulnerable to SQL injection attacks, which can allow an attacker to inject malicious SQL code and access or modify sensitive data. This can lead to unauthorized data exposure, modification, or even deletion. By using parameterized queries or a query builder, untrusted input can be safely bound, preventing malicious SQL code from being executed.
+
+```
+const sql = require('sql-query');
+const query = sql.select('*').from('users').where('username', req.body.username);
+const results = await db.query(query);
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
 ---
 
@@ -60,6 +84,17 @@
 
 **Recommendation:** Move credentials into environment variables and rotate compromised values.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+Hardcoding sensitive information like JWT or API secrets directly into source code is dangerous because it exposes these secrets to anyone with access to the code, whether through version control systems, code sharing, or other means. This can lead to unauthorized access, data breaches, or other malicious activities. Moving these secrets to environment variables helps to keep them separate from the codebase and reduces the risk of exposure.
+
+```
+const apiToken = process.env.API_TOKEN;
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+
 ---
 
 ### 🟠 `HIGH` — High-entropy credential-like value found
@@ -71,6 +106,19 @@
 **Description:** A long high-entropy string appears next to a secret-like variable name.
 
 **Recommendation:** Replace the hardcoded value with an environment variable and rotate the credential.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+Hardcoding high-entropy credential-like values poses a significant security risk as it can lead to unauthorized access if the code is exposed. This can happen through various means such as code leaks, public repositories, or insider threats. Using environment variables to store sensitive information and rotating credentials regularly can mitigate these risks.
+
+```
+import os
+secret_key = os.environ.get('SECRET_KEY')
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+- https://owasp.org/Top10/A07_2021-Identification_and_Authentication_Failures/
 
 ---
 
@@ -84,6 +132,17 @@
 
 **Recommendation:** Upgrade body-parser to the patched version recommended by npm audit.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
+
 ---
 
 ### 🟠 `HIGH` — Dependency vulnerability: express
@@ -95,6 +154,17 @@
 **Description:** 8 advisory item(s) detected for express. Range: <=4.21.2 || 5.0.0-alpha.1 - 5.0.1.
 
 **Recommendation:** Upgrade express to the patched version recommended by npm audit.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
 
 ---
 
@@ -108,6 +178,17 @@
 
 **Recommendation:** Upgrade lodash to the patched version recommended by npm audit.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
+
 ---
 
 ### 🟠 `HIGH` — Dependency vulnerability: path-to-regexp
@@ -119,6 +200,17 @@
 **Description:** 3 advisory item(s) detected for path-to-regexp. Range: <=0.1.12.
 
 **Recommendation:** Upgrade path-to-regexp to the patched version recommended by npm audit.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
 
 ---
 
@@ -132,6 +224,17 @@
 
 **Recommendation:** Protect sensitive routes with authentication and authorization middleware before the handler.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+This vulnerability is dangerous because it allows unauthorized access to sensitive routes, potentially leading to data breaches, modification, or deletion. Without proper authentication and authorization, an attacker can exploit this weakness to gain access to restricted areas of the application, compromising its security and integrity.
+
+```
+app.get('/sensitive-route', authenticateMiddleware, authorizeMiddleware, routeHandler);
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html
+
 ---
 
 ### 🟡 `MEDIUM` — Dependency vulnerability: qs
@@ -143,6 +246,17 @@
 **Description:** 2 advisory item(s) detected for qs. Range: <=6.14.1.
 
 **Recommendation:** Upgrade qs to the patched version recommended by npm audit.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
 
 ---
 
@@ -156,6 +270,17 @@
 
 **Recommendation:** Upgrade cookie to the patched version recommended by npm audit.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
+
 ---
 
 ### 🟢 `LOW` — Dependency vulnerability: send
@@ -168,6 +293,17 @@
 
 **Recommendation:** Upgrade send to the patched version recommended by npm audit.
 
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
+
 ---
 
 ### 🟢 `LOW` — Dependency vulnerability: serve-static
@@ -179,6 +315,17 @@
 **Description:** 2 advisory item(s) detected for serve-static. Range: <=1.16.0.
 
 **Recommendation:** Upgrade serve-static to the patched version recommended by npm audit.
+
+**AI Fix Suggestion** _(🤖 Gemini AI)_
+
+The body-parser dependency is vulnerable to attacks due to outdated components. This can lead to security breaches, such as Denial of Service (DoS) or Remote Code Execution (RCE), allowing attackers to exploit the vulnerability and gain unauthorized access to the system. Upgrading to a patched version is essential to prevent such attacks.
+
+```
+npm install body-parser@1.20.4
+```
+
+**References:**
+- https://cheatsheetseries.owasp.org/cheatsheets/Dependency_Checker.html
 
 ---
 
