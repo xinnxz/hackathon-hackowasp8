@@ -164,7 +164,24 @@ function printSummary(
   console.log(`│ HIGH     │ ${pad(report.summary.high)} │`);
   console.log(`│ MEDIUM   │ ${pad(report.summary.medium)} │`);
   console.log(`│ LOW      │ ${pad(report.summary.low)} │`);
-  console.log("└──────────┴───────┘");
+  console.log("└──────────┴───────┘\n");
+
+  if (report.findings.length > 0) {
+    console.log("\x1b[1mFindings Preview\x1b[0m");
+    const previewCount = Math.min(10, report.findings.length);
+    for (let i = 0; i < previewCount; i++) {
+      const f = report.findings[i];
+      let sevColor = "\x1b[36m"; // low
+      if (f.severity === "critical") sevColor = "\x1b[31m";
+      if (f.severity === "high") sevColor = "\x1b[35m";
+      if (f.severity === "medium") sevColor = "\x1b[33m";
+      console.log(`  ${sevColor}[${f.severity.toUpperCase()}]\x1b[0m ${f.title}`);
+      console.log(`    └─ ${f.file}:${f.line}`);
+    }
+    if (report.findings.length > previewCount) {
+      console.log(`  \x1b[90m... and ${report.findings.length - previewCount} more. Check the HTML report for details.\x1b[0m`);
+    }
+  }
 
   console.log(`\nTarget:  ${report.scannedPath}`);
   console.log(`Policy:  fail-on [${report.policy.failOn.join(", ")}]`);
