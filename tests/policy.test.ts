@@ -34,6 +34,47 @@ test("evaluatePass fails when score below threshold", () => {
   assert.equal(passed, false);
 });
 
+test("evaluatePass matrix: pass when no severity hit and score ok", () => {
+  assert.equal(evaluatePass([], ["high", "critical"], 100, 0).passed, true);
+  assert.equal(evaluatePass([], ["high", "critical"], 100, 0).notes.length, 0);
+});
+
+test("evaluatePass matrix: pass at exact threshold boundary", () => {
+  assert.equal(evaluatePass([], ["high", "critical"], 50, 50).passed, true);
+});
+
+test("evaluatePass matrix: fail just below threshold", () => {
+  const { passed, notes } = evaluatePass([], ["high", "critical"], 49, 50);
+  assert.equal(passed, false);
+  assert.ok(notes.some((n) => n.includes("threshold")));
+});
+
+test("evaluatePass matrix: medium severity does not fail when failOn is high+critical only", () => {
+  const findings: Finding[] = [{
+    type: "misconfiguration",
+    title: "m",
+    severity: "medium",
+    file: "a.js",
+    line: 1,
+    description: "",
+    recommendation: "",
+  }];
+  assert.equal(evaluatePass(findings, ["high", "critical"], 80, 0).passed, true);
+});
+
+test("evaluatePass matrix: high severity fails when in failOn", () => {
+  const findings: Finding[] = [{
+    type: "secret",
+    title: "t",
+    severity: "high",
+    file: "a.js",
+    line: 1,
+    description: "",
+    recommendation: "",
+  }];
+  assert.equal(evaluatePass(findings, ["high", "critical"], 100, 0).passed, false);
+});
+
 test("applyFindingIgnores filters by type", () => {
   const findings: Finding[] = [
     { type: "dependency", title: "Dependency vulnerability: x", severity: "high", file: "p.json", line: 1, description: "", recommendation: "" },

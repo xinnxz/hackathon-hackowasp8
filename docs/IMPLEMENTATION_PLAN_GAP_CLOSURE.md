@@ -9,7 +9,7 @@
 
 ## 1. Executive summary
 
-Audit singkat menunjukkan bahwa **konfigurasi `.guardrailrc.json` dan `policy.scoreThreshold` belum terhubung ke mesin scan dan logika PASS/FAIL**. Ini adalah risiko utama terhadap kredibilitas demo: reviewer yang menguji “mematikan rule” akan melihat perilaku yang tidak sesuai README.
+**Status (baseline):** konfigurasi `.guardrailrc.json`, `ignore.paths` / `ignore.findings`, dan `policy.scoreThreshold` **sudah terhubung** ke scan, filter findings, dan `evaluatePass` / `report.passed`. Paragraf di bawah menggambarkan **situasi audit awal** sebelum gap closure.
 
 Rencana ini mengutamakan **integritas perilaku (behavioral integrity)** di atas penambahan fitur visual baru. Estimasi total implementasi terfokus: **~8–14 jam** kerja untuk satu developer, dapat dipecah menjadi sprint harian.
 
@@ -205,12 +205,14 @@ Rencana ini mengutamakan **integritas perilaku (behavioral integrity)** di atas 
 
 ## 8. Definisi selesai (Definition of Done)
 
-- [ ] `.guardrailrc.json` mengubah perilaku scan yang dapat ditunjukkan dalam demo 60 detik.
-- [ ] `scoreThreshold` mempengaruhi `passed` sesuai dokumentasi.
-- [ ] CLI vs config: prioritas terdokumentasi dan teruji.
-- [ ] CI scan tidak menghasilkan noise yang memalukan pada repo default.
-- [ ] `npm test` + `npm run build` lulus.
-- [ ] README tidak mengklaim fitur yang tidak ada di kode.
+- [x] `.guardrailrc.json` mengubah perilaku scan yang dapat ditunjukkan dalam demo 60 detik (`npm run demo:judge`, rule toggles + ignore).
+- [x] `scoreThreshold` mempengaruhi `passed` sesuai dokumentasi (`evaluatePass`, tes di `tests/policy.test.ts`).
+- [x] CLI vs config: prioritas terdokumentasi dan teruji (`mergeFailOn`, README).
+- [x] CI scan tidak menghasilkan noise yang memalukan pada repo default (root `.guardrailrc.json` mengabaikan `demo/`, `docs/`, `tests/`, dll.; workflow `scan .`).
+- [x] `npm test` + `npm run build` lulus.
+- [x] README tidak mengklaim fitur yang tidak ada di kode (self-audit berkala disarankan).
+
+**Fase F (selesai):** `tests/integration.test.ts` — integrasi `loadConfig` + `scanProject` di repo Git terisolasi (temp); `tests/policy.test.ts` — matrix `evaluatePass`; `tests/reportShape.test.ts` — bentuk JSON report stabil; `tests/fixtures/README.md` menjelaskan pola fixture. **27** tes (`npm test`).
 
 ---
 
@@ -222,6 +224,8 @@ Semua perubahan harus merupakan **karya tim sendiri** dan mematuhi aturan HackOW
 
 ## 10. Status implementasi (baseline gap closure)
 
+**Ringkas: gap closure Fase A–G (termasuk Fase F: integrasi + regresi) selesai untuk ruang lingkup dokumen ini.**
+
 Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke codebase:
 
 - `scanProject(targetPath, config)` memakai `GuardrailConfig` untuk rule toggles dan audit dependency opsional.
@@ -229,9 +233,10 @@ Per **2026-04-19**, inti rencana Fase B–D berikut telah diintegrasikan ke code
 - `mergeFailOn` + `evaluatePass` (severity + `scoreThreshold`) mengatur `report.passed` dan `policy.notes`.
 - Contoh repo root: `.guardrailrc.json` untuk CI `scan .` yang mengabaikan `demo/`, `docs/`, `tests/`, dll.
 
-Item lanjutan opsional: perluasan glob `ignore.paths`, tes edge case tambahan (`loadConfig` pada file vs folder), dan polish laporan.
+Item lanjutan opsional: perluasan glob `ignore.paths`, tes `loadConfig` saat target adalah file (bukan folder), polish laporan.
 
 ### 10.1 Update lanjutan (2026-04-19)
 
 - **SARIF rule id stabil:** `src/util/stableRuleId.ts` — hash SHA-256 dari `type` + `title`; `rules` di SARIF deduplikasi per id (tidak lagi `type-index`).
 - **Parent config (Git-bounded):** `src/config/discovery.ts` — `listConfigDirectories` hanya dari **root Git** ke target; tanpa `.git`, hanya folder target. `loadConfig()` menggabungkan berkas dalam urutan itu (lihat log `Merged N file(s): …`).
+- **Fase F:** integrasi + matrix policy + bentuk JSON report — lihat `tests/integration.test.ts`, `tests/reportShape.test.ts`, dan pembaruan `tests/policy.test.ts`.
